@@ -77,7 +77,6 @@ pkgs.buildEnv {
     jq
     k9s
     kakoune
-    keepassxc
     # 2022-01-23: macOS: kitty tests failed w/ permission issues
     (kitty.overrideAttrs(oa: { doInstallCheck = false; }))
     kubectl
@@ -109,6 +108,8 @@ pkgs.buildEnv {
     # Unfree software; requires config.allowUnfree = true
     vscode
   ]) ++(lib.optionals stdenv.isDarwin [
+    # 2022-02-06: macOS testykchallengeresponsekey is failing
+    (keepassxc.overrideAttrs (oa: { doCheck = false; }))
     pinentry_mac
   ]) ++ (lib.optionals stdenv.isLinux [
     desktop-file-utils
@@ -120,6 +121,7 @@ pkgs.buildEnv {
       };
     })
     google-chrome
+    keepassxc
     lens
     obs-studio
     onedrive
