@@ -22,6 +22,13 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
     in
     {
+      apps = forAllSystems (system: {
+        kicad5 = self.apps.${system}.kicad-5_1_12;
+        kicad-5_1_12 = {
+          type = "app";
+          program = "${self.packages.${system}.kicad-5_1_12}/bin/kicad";
+        };
+      });
       packages = forAllSystems (system: import ./default.nix {
         pkgs = import nixpkgs {
           inherit system;

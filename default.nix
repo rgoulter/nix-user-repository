@@ -15,5 +15,5 @@
   devops-env-c = import ./pkgs/devops-env-c { pkgs = pkgs; };
   # myPackages = import ./pkgs/myPackages { pkgs = pkgs; };
   myPackages = import ./pkgs/myPackages {};
-  kicad = pkgs-with-kicad5.kicad;
+  kicad-5_1_12 = pkgs-with-kicad5.kicad;
 }
