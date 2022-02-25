@@ -1,7 +1,15 @@
 {
   description = "My personal NUR repository";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  outputs = { self, nixpkgs }:
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-with-kicad5 = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
+    };
+  };
+  outputs = { self, nixpkgs, nixpkgs-with-kicad5 }:
     let
       systems = [
         "x86_64-linux"
@@ -16,6 +24,10 @@
     {
       packages = forAllSystems (system: import ./default.nix {
         pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
           inherit system;
           config.allowUnfree = true;
         };
