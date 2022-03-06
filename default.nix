@@ -13,7 +13,6 @@
   istioctl-1_8_6 = pkgs.callPackage ./pkgs/istioctl/1_8_6 { };
   terraform_0_12_9 = pkgs.callPackage ./pkgs/terraform/0_12_9 { };
   devops-env-c = import ./pkgs/devops-env-c { pkgs = pkgs; };
-  # myPackages = import ./pkgs/myPackages { pkgs = pkgs; };
-  myPackages = import ./pkgs/myPackages {};
+  myPackages = import ./pkgs/myPackages { inherit pkgs; };
   kicad-5_1_12 = pkgs-with-kicad5.kicad;
 }

@@ -39,10 +39,20 @@ StartupWMClass=Emacs
 Keywords=Text;Editor;
       '';
         };
+  # h/t https://nixos.org/manual/nixpkgs/stable/#sec-gnu-info-setup
+  myProfile = pkgs.writeText "my-profile" ''
+    export PATH=$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/sbin:/bin:/usr/sbin:/usr/bin
+    export MANPATH=$HOME/.nix-profile/share/man:/nix/var/nix/profiles/default/share/man:/usr/share/man
+    export INFOPATH=$HOME/.nix-profile/share/info:/nix/var/nix/profiles/default/share/info:/usr/share/info
+  '';
 in
 pkgs.buildEnv {
   name = "my-packages";
   paths = with pkgs; [
+    (runCommand "profile" {} ''
+      mkdir -p $out/etc/profile.d
+      cp ${myProfile} $out/etc/profile.d/my-profile.sh
+    '')
     alacritty
     aspell
     aspellDicts.en
@@ -64,6 +74,7 @@ pkgs.buildEnv {
     emacs-all-the-icons-fonts
     exa
     fd
+    findutils
     fish
     fzf
     fzy
@@ -97,6 +108,7 @@ pkgs.buildEnv {
     silver-searcher
     skim
     starship
+    texinfoInteractive
     tldr
     tmate
     tmux
@@ -131,5 +143,22 @@ pkgs.buildEnv {
     tdesktop
     vlc
   ]);
-  pathsToLink = ["/bin" "/lib" "/share" ] ++ (with pkgs; lib.optionals stdenv.isDarwin [ "/Applications" "/Library" ]);
+  extraOutputsToInstall = [ "man" "doc" "info" ];
+  pathsToLink = [
+    "/bin"
+    "/etc"
+    "/lib"
+    "/share"
+  ] ++ (with pkgs; lib.optionals stdenv.isDarwin [
+    "/Applications"
+    "/Library"
+  ]);
+  postBuild = ''
+    if [ -x $out/bin/install-info -a -w $out/share/info ]; then
+      shopt -s nullglob
+      for i in $out/share/info/*.info $out/share/info/*.info.gz; do
+          $out/bin/install-info $i $out/share/info/dir
+      done
+    fi
+  '';
 }
