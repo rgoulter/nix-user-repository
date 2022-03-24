@@ -6,39 +6,39 @@ let
       name = "chemacs-doom";
       destination = "/share/applications/emacs-doom.desktop";
       text = ''
-[Desktop Entry]
-Name=Emacs (Doom)
-GenericName=Text Editor
-Comment=Edit text
-MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-Exec=emacs --with-profile doom %F
-Icon=emacs
-Type=Application
-Terminal=false
-Categories=Development;TextEditor;
-StartupWMClass=Emacs
-Keywords=Text;Editor;
+        [Desktop Entry]
+        Name=Emacs (Doom)
+        GenericName=Text Editor
+        Comment=Edit text
+        MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+        Exec=emacs --with-profile doom %F
+        Icon=emacs
+        Type=Application
+        Terminal=false
+        Categories=Development;TextEditor;
+        StartupWMClass=Emacs
+        Keywords=Text;Editor;
       '';
-        };
+    };
   emacsWithProfileSpacemacsApplication =
     pkgs.writeTextFile {
       name = "chemacs-spacemacs";
       destination = "/share/applications/emacs-spacemacs.desktop";
       text = ''
-[Desktop Entry]
-Name=Emacs (Spacemacs)
-GenericName=Text Editor
-Comment=Edit text
-MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-Exec=emacs --with-profile spacemacs %F
-Icon=emacs
-Type=Application
-Terminal=false
-Categories=Development;TextEditor;
-StartupWMClass=Emacs
-Keywords=Text;Editor;
+        [Desktop Entry]
+        Name=Emacs (Spacemacs)
+        GenericName=Text Editor
+        Comment=Edit text
+        MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+        Exec=emacs --with-profile spacemacs %F
+        Icon=emacs
+        Type=Application
+        Terminal=false
+        Categories=Development;TextEditor;
+        StartupWMClass=Emacs
+        Keywords=Text;Editor;
       '';
-        };
+    };
   # h/t https://nixos.org/manual/nixpkgs/stable/#sec-gnu-info-setup
   myProfile = pkgs.writeText "my-profile" ''
     export PATH=$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -49,7 +49,7 @@ in
 pkgs.buildEnv {
   name = "my-packages";
   paths = with pkgs; [
-    (runCommand "profile" {} ''
+    (runCommand "profile" { } ''
       mkdir -p $out/etc/profile.d
       cp ${myProfile} $out/etc/profile.d/my-profile.sh
     '')
@@ -89,14 +89,14 @@ pkgs.buildEnv {
     k9s
     kakoune
     # 2022-01-23: macOS: kitty tests failed w/ permission issues
-    (kitty.overrideAttrs(oa: { doInstallCheck = false; }))
+    (kitty.overrideAttrs (oa: { doInstallCheck = false; }))
     kubectl
     lazydocker
     lazygit
     less
     # 2021-01-26: macOS: neovim, temporarily broken
     # https://github.com/NixOS/nixpkgs/pull/155688
-    (wrapNeovim (neovim-unwrapped.overrideAttrs (oa: { NIX_LDFLAGS = []; })) { })
+    (wrapNeovim (neovim-unwrapped.overrideAttrs (oa: { NIX_LDFLAGS = [ ]; })) { })
     nix
     openssh
     procps
@@ -119,7 +119,7 @@ pkgs.buildEnv {
   ] ++ (lib.optionals true [
     # Unfree software; requires config.allowUnfree = true
     vscode
-  ]) ++(lib.optionals stdenv.isDarwin [
+  ]) ++ (lib.optionals stdenv.isDarwin [
     # 2022-02-06: macOS testykchallengeresponsekey is failing
     (keepassxc.overrideAttrs (oa: { doCheck = false; }))
     pinentry_mac

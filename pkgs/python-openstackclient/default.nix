@@ -2,19 +2,19 @@
 
 with lib;
 let
-  os-service-types       = ps: ps.callPackage ../python-packages/os-service-types { };
-  keystoneauth1          = ps: ps.callPackage ../python-packages/keystoneauth1 { };
-  oslo_i18n              = ps: ps.callPackage ../python-packages/oslo_i18n { };
-  debtcollector          = ps: ps.callPackage ../python-packages/debtcollector { };
-  oslo_utils             = ps: ps.callPackage ../python-packages/oslo_utils { };
-  openstacksdk           = ps: ps.callPackage ../python-packages/openstacksdk { };
-  osc-lib                = ps: ps.callPackage ../python-packages/osc-lib { };
-  oslo_serialization     = ps: ps.callPackage ../python-packages/oslo_serialization { };
-  oslo_config            = ps: ps.callPackage ../python-packages/oslo_config { };
-  python-keystoneclient  = ps: ps.callPackage ../python-packages/python-keystoneclient { };
-  python-novaclient      = ps: ps.callPackage ../python-packages/python-novaclient { };
-  python-cinderclient    = ps: ps.callPackage ../python-packages/python-cinderclient { };
-  python-openstackclient = ps: ps.callPackage ../python-packages/python-openstackclient {};
+  os-service-types = ps: ps.callPackage ../python-packages/os-service-types { };
+  keystoneauth1 = ps: ps.callPackage ../python-packages/keystoneauth1 { };
+  oslo_i18n = ps: ps.callPackage ../python-packages/oslo_i18n { };
+  debtcollector = ps: ps.callPackage ../python-packages/debtcollector { };
+  oslo_utils = ps: ps.callPackage ../python-packages/oslo_utils { };
+  openstacksdk = ps: ps.callPackage ../python-packages/openstacksdk { };
+  osc-lib = ps: ps.callPackage ../python-packages/osc-lib { };
+  oslo_serialization = ps: ps.callPackage ../python-packages/oslo_serialization { };
+  oslo_config = ps: ps.callPackage ../python-packages/oslo_config { };
+  python-keystoneclient = ps: ps.callPackage ../python-packages/python-keystoneclient { };
+  python-novaclient = ps: ps.callPackage ../python-packages/python-novaclient { };
+  python-cinderclient = ps: ps.callPackage ../python-packages/python-cinderclient { };
+  python-openstackclient = ps: ps.callPackage ../python-packages/python-openstackclient { };
   my-python-packages = python-packages: with python-packages; [
     appdirs
     cliff

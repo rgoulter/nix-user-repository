@@ -33,5 +33,5 @@ pkgs.buildEnv {
     wget
     which
   ];
-  pathsToLink = ["/bin" "/lib" "/share"];
+  pathsToLink = [ "/bin" "/lib" "/share" ];
 }
