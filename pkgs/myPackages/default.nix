@@ -89,14 +89,14 @@ pkgs.buildEnv {
     k9s
     kakoune
     # 2022-01-23: macOS: kitty tests failed w/ permission issues
-    (kitty.overrideAttrs (oa: { doInstallCheck = false; }))
+    (kitty.overrideAttrs (_: { doInstallCheck = false; }))
     kubectl
     lazydocker
     lazygit
     less
     # 2021-01-26: macOS: neovim, temporarily broken
     # https://github.com/NixOS/nixpkgs/pull/155688
-    (wrapNeovim (neovim-unwrapped.overrideAttrs (oa: { NIX_LDFLAGS = [ ]; })) { })
+    (wrapNeovim (neovim-unwrapped.overrideAttrs (_: { NIX_LDFLAGS = [ ]; })) { })
     nix
     openssh
     procps
@@ -121,7 +121,7 @@ pkgs.buildEnv {
     vscode
   ]) ++ (lib.optionals stdenv.isDarwin [
     # 2022-02-06: macOS testykchallengeresponsekey is failing
-    (keepassxc.overrideAttrs (oa: { doCheck = false; }))
+    (keepassxc.overrideAttrs (_: { doCheck = false; }))
     pinentry_mac
   ]) ++ (lib.optionals stdenv.isLinux [
     desktop-file-utils

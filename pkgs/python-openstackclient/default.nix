@@ -1,4 +1,4 @@
-{ lib, callPackage, python38 }:
+{ lib, python38 }:
 
 with lib;
 let
