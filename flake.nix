@@ -29,6 +29,73 @@
           program = "${self.packages.${system}.kicad-5_1_12}/bin/kicad";
         };
       });
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          go = pkgs.mkShell {
+            packages = with pkgs; [
+              go
+              gopls
+            ];
+          };
+          go_1_16 = pkgs.mkShell {
+            packages = with pkgs; [
+              go_1_16
+              gopls
+            ];
+          };
+          go_1_17 = pkgs.mkShell {
+            packages = with pkgs; [
+              go_1_17
+              gopls
+            ];
+          };
+          go_1_18 = pkgs.mkShell {
+            packages = with pkgs; [
+              go_1_18
+              gopls
+            ];
+          };
+
+          python_3_7 = pkgs.mkShell {
+            packages = with pkgs; [
+              libffi
+              python37
+              pyright
+            ];
+          };
+          python_3_8 = pkgs.mkShell {
+            packages = with pkgs; [
+              libffi
+              python38
+              pyright
+            ];
+          };
+          python_3_9 = pkgs.mkShell {
+            packages = with pkgs; [
+              libffi
+              python39
+              pyright
+            ];
+          };
+          python_3_10 = pkgs.mkShell {
+            packages = with pkgs; [
+              libffi
+              python310
+              pyright
+            ];
+          };
+
+          terraform = pkgs.mkShell {
+            packages = with pkgs; [
+              terraform
+              terraform-ls
+              tflint
+            ];
+          };
+        });
       packages = forAllSystems (system: import ./default.nix {
         pkgs = import nixpkgs {
           inherit system;
