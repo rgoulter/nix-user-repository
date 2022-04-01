@@ -2,6 +2,7 @@
   description = "My personal NUR repository";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-2105.url = "github:NixOS/nixpkgs/nixos-21.05";
     nixpkgs-with-kicad5 = {
       type = "github";
       owner = "NixOS";
@@ -9,7 +10,7 @@
       rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
     };
   };
-  outputs = { self, nixpkgs, nixpkgs-with-kicad5 }:
+  outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5 }:
     let
       systems = [
         "x86_64-linux"
@@ -59,6 +60,17 @@
             ];
           };
 
+          python_3_6 =
+          let
+            pkgs = nixos-2105.legacyPackages.${system};
+          in
+          pkgs.mkShell {
+            packages = with pkgs; [
+              libffi
+              python36
+              pyright
+            ];
+          };
           python_3_7 = pkgs.mkShell {
             packages = with pkgs; [
               libffi
