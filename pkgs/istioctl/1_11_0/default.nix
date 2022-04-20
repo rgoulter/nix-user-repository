@@ -27,7 +27,8 @@ buildGoModule rec {
   subPackages = [ "istioctl/cmd/istioctl" ];
 
   postInstall = ''
-    $out/bin/istioctl collateral --man --bash --zsh
+    mv $out/bin/istioctl $out/bin/istioctl-${version}
+    $out/bin/istioctl-${version} collateral --man --bash --zsh
     installManPage *.1
     installShellCompletion istioctl.bash
     installShellCompletion --zsh _istioctl
