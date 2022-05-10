@@ -121,7 +121,8 @@ pkgs.buildEnv {
     vscode
   ]) ++ (lib.optionals stdenv.isDarwin [
     # 2022-02-06: macOS testykchallengeresponsekey is failing
-    (keepassxc.overrideAttrs (_: { doCheck = false; }))
+    # 2022-05-10: KeePass needs newer macOS
+    # (keepassxc.overrideAttrs (_: { doCheck = false; }))
     pinentry_mac
   ]) ++ (lib.optionals stdenv.isLinux [
     desktop-file-utils
