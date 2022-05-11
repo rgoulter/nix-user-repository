@@ -8,6 +8,7 @@ pkgs.buildEnv {
     bat
     bottom
     coreutils
+    csvkit
     ctags
     direnv
     fd
@@ -16,10 +17,12 @@ pkgs.buildEnv {
     gawk
     git
     google-cloud-sdk
+    helix
     htop
     jq
     k9s
     kubectl
+    mysql
     lazydocker
     lazygit
     less
