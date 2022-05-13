@@ -33,81 +33,11 @@
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          nixos-2105-pkgs = nixos-2105.legacyPackages.${system};
         in
-        {
-          go = pkgs.mkShell {
-            packages = with pkgs; [
-              go
-              gopls
-            ];
-          };
-          go_1_16 = pkgs.mkShell {
-            packages = with pkgs; [
-              go_1_16
-              gopls
-            ];
-          };
-          go_1_17 = pkgs.mkShell {
-            packages = with pkgs; [
-              go_1_17
-              gopls
-            ];
-          };
-          go_1_18 = pkgs.mkShell {
-            packages = with pkgs; [
-              go_1_18
-              gopls
-            ];
-          };
-
-          python_3_6 =
-          let
-            pkgs = nixos-2105.legacyPackages.${system};
-          in
-          pkgs.mkShell {
-            packages = with pkgs; [
-              libffi
-              python36
-              pyright
-            ];
-          };
-          python_3_7 = pkgs.mkShell {
-            packages = with pkgs; [
-              libffi
-              python37
-              pyright
-            ];
-          };
-          python_3_8 = pkgs.mkShell {
-            packages = with pkgs; [
-              libffi
-              python38
-              pyright
-            ];
-          };
-          python_3_9 = pkgs.mkShell {
-            packages = with pkgs; [
-              libffi
-              python39
-              pyright
-            ];
-          };
-          python_3_10 = pkgs.mkShell {
-            packages = with pkgs; [
-              libffi
-              python310
-              pyright
-            ];
-          };
-
-          terraform = pkgs.mkShell {
-            packages = with pkgs; [
-              terraform
-              terraform-ls
-              tflint
-            ];
-          };
-        });
+        pkgs.callPackage ./shells/go {} //
+        pkgs.callPackage ./shells/python { inherit nixos-2105-pkgs; } //
+        pkgs.callPackage ./shells/terraform {});
       packages = forAllSystems (system: import ./default.nix {
         pkgs = import nixpkgs {
           inherit system;
