@@ -9,8 +9,12 @@
       repo = "nixpkgs";
       rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5 }:
+  outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5, fenix }:
     let
       systems = [
         "x86_64-linux"
@@ -34,9 +38,11 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           nixos-2105-pkgs = nixos-2105.legacyPackages.${system};
+          fenix-pkgs = fenix.packages.${system};
         in
         pkgs.callPackage ./shells/go {} //
         pkgs.callPackage ./shells/python { inherit nixos-2105-pkgs; } //
+        pkgs.callPackage ./shells/rust { inherit fenix-pkgs; } //
         pkgs.callPackage ./shells/terraform {});
       packages = forAllSystems (system: import ./default.nix {
         pkgs = import nixpkgs {
