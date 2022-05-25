@@ -27,6 +27,7 @@ pkgs.buildEnv {
     lazygit
     less
     neovim
+    nodePackages.bash-language-server
     ripgrep
     silver-searcher
     starship
