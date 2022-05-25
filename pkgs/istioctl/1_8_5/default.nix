@@ -18,6 +18,9 @@ buildGoModule rec {
 
   nativeBuildInputs = [ go-bindata installShellFiles ];
 
+  # istioctl -> istioctl-1.8.5
+  patches = [./istioctl-cmd.patch];
+
   # Bundle charts
   preBuild = ''
     patchShebangs operator/scripts
@@ -42,8 +45,8 @@ buildGoModule rec {
     mv $out/bin/istioctl $out/bin/istioctl-${version}
     $out/bin/istioctl-${version} collateral --man --bash --zsh
     installManPage *.1
-    installShellCompletion istioctl.bash
-    installShellCompletion --zsh _istioctl
+    installShellCompletion istioctl*.bash
+    installShellCompletion --zsh _istioctl*
   '';
 
   meta = with lib; {
