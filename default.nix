@@ -9,6 +9,10 @@
     { }
 }:
 
+let
+  makeEmacsChemacsProfile =
+    pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+in
 {
   python-openstackclient = pkgs.callPackage ./pkgs/python-openstackclient { };
   istioctl-1_7_8 = pkgs.callPackage ./pkgs/istioctl/1_7_8 { };
@@ -19,6 +23,6 @@
   terraform_0_12_9 = pkgs.callPackage ./pkgs/terraform/0_12_9 { };
   terraform_0_12_31 = pkgs.callPackage ./pkgs/terraform/0_12_31 { };
   devops-env-c = import ./pkgs/devops-env-c { inherit pkgs; };
-  myPackages = import ./pkgs/myPackages { inherit pkgs; };
+  myPackages = import ./pkgs/myPackages { inherit pkgs makeEmacsChemacsProfile; };
   kicad-5_1_12 = pkgs-with-kicad5.kicad;
 }

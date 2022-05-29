@@ -1,44 +1,12 @@
-{ pkgs }:
+{ pkgs
+, makeEmacsChemacsProfile
+}:
 
 let
   emacsWithProfileDoomApplication =
-    pkgs.writeTextFile {
-      name = "chemacs-doom";
-      destination = "/share/applications/emacs-doom.desktop";
-      text = ''
-        [Desktop Entry]
-        Name=Emacs (Doom)
-        GenericName=Text Editor
-        Comment=Edit text
-        MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-        Exec=emacs --with-profile doom %F
-        Icon=emacs
-        Type=Application
-        Terminal=false
-        Categories=Development;TextEditor;
-        StartupWMClass=Emacs
-        Keywords=Text;Editor;
-      '';
-    };
+    makeEmacsChemacsProfile { profileName = "doom"; displayName = "Doom"; };
   emacsWithProfileSpacemacsApplication =
-    pkgs.writeTextFile {
-      name = "chemacs-spacemacs";
-      destination = "/share/applications/emacs-spacemacs.desktop";
-      text = ''
-        [Desktop Entry]
-        Name=Emacs (Spacemacs)
-        GenericName=Text Editor
-        Comment=Edit text
-        MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-        Exec=emacs --with-profile spacemacs %F
-        Icon=emacs
-        Type=Application
-        Terminal=false
-        Categories=Development;TextEditor;
-        StartupWMClass=Emacs
-        Keywords=Text;Editor;
-      '';
-    };
+    makeEmacsChemacsProfile { profileName = "spacemacs"; displayName = "Spacemacs"; };
   # h/t https://nixos.org/manual/nixpkgs/stable/#sec-gnu-info-setup
   myProfile = pkgs.writeText "my-profile" ''
     export PATH=$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -72,6 +40,8 @@ pkgs.buildEnv {
       epkgs.vterm
     ]))
     emacs-all-the-icons-fonts
+    emacsWithProfileDoomApplication
+    emacsWithProfileSpacemacsApplication
     exa
     fd
     findutils
@@ -126,8 +96,6 @@ pkgs.buildEnv {
     pinentry_mac
   ]) ++ (lib.optionals stdenv.isLinux [
     desktop-file-utils
-    emacsWithProfileDoomApplication
-    emacsWithProfileSpacemacsApplication
     (firefox.override {
       cfg = {
         enableTridactylNative = true;
