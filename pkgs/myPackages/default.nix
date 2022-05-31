@@ -54,6 +54,7 @@ pkgs.buildEnv {
     glances
     gnupg
     google-cloud-sdk
+    helix
     htop
     jq
     k9s
@@ -71,6 +72,7 @@ pkgs.buildEnv {
     openssh
     procps
     python38Packages.powerline
+    qmk
     ripgrep
     # ruby needed for tmux-jump
     ruby
@@ -110,6 +112,7 @@ pkgs.buildEnv {
     slack
     spotify
     tdesktop
+    thunderbird
     vlc
   ]);
   extraOutputsToInstall = [ "man" "doc" "info" ];
