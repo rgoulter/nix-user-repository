@@ -31,6 +31,7 @@
     packages = with pkgs; [
       libffi
       python39
+      python39.pkgs.python-lsp-server
       pyright
     ];
   };
@@ -38,6 +39,7 @@
     packages = with pkgs; [
       libffi
       python310
+      python310.pkgs.python-lsp-server
       pyright
     ];
   };
