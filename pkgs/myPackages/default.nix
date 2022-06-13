@@ -51,7 +51,8 @@ pkgs.buildEnv {
     gawk
     git
     gitAndTools.tig
-    glances
+    # 2022-06-13: didn't build on macos
+    # glances
     gnupg
     google-cloud-sdk
     helix
