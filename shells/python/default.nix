@@ -10,6 +10,7 @@
     packages = with pkgs; [
       libffi
       python36
+      python36Packages.pip-tools
       pyright
     ];
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
@@ -20,6 +21,7 @@
     packages = with pkgs; [
       libffi
       python37
+      python37Packages.pip-tools
       pyright
     ];
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
@@ -30,6 +32,7 @@
     packages = with pkgs; [
       libffi
       python38
+      python38Packages.pip-tools
       pyright
     ];
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
@@ -40,6 +43,7 @@
     packages = with pkgs; [
       libffi
       python39
+      python39.pkgs.pip-tools
       python39.pkgs.python-lsp-server
       pyright
     ];
@@ -52,6 +56,7 @@
       libffi
       python310
       python310.pkgs.python-lsp-server
+      python310.pkgs.pip-tools
       pyright
     ];
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
