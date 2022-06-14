@@ -12,6 +12,9 @@
       python36
       pyright
     ];
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
+    ];
   };
   python_3_7 = pkgs.mkShell {
     packages = with pkgs; [
@@ -19,12 +22,18 @@
       python37
       pyright
     ];
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
+    ];
   };
   python_3_8 = pkgs.mkShell {
     packages = with pkgs; [
       libffi
       python38
       pyright
+    ];
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
     ];
   };
   python_3_9 = pkgs.mkShell {
@@ -34,6 +43,9 @@
       python39.pkgs.python-lsp-server
       pyright
     ];
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
+    ];
   };
   python_3_10 = pkgs.mkShell {
     packages = with pkgs; [
@@ -41,6 +53,9 @@
       python310
       python310.pkgs.python-lsp-server
       pyright
+    ];
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
     ];
   };
 }
