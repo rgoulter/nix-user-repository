@@ -8,6 +8,7 @@
   in
   pkgs.mkShell {
     packages = with pkgs; [
+      cargo
       libffi
       python36
       pyright
