@@ -1,3 +1,6 @@
+# offline.nix - NixOS configuration for an "offline"
+#  NixOS ISO, for e.g. generating a KeePassXC diceware
+#  passphrase, or manipulating PGP / GnuPG keys.
 { config, pkgs, ... }:
 
 {
