@@ -13,8 +13,12 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5, fenix }:
+  outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5, fenix, nixos-generators }:
     let
       systems = [
         "x86_64-linux"
@@ -53,6 +57,7 @@
           inherit system;
           config.allowUnfree = true;
         };
+        inherit nixos-generators;
       });
     };
 }

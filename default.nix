@@ -7,6 +7,7 @@
       rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
     })
     { }
+, nixos-generators
 }:
 
 let
@@ -25,4 +26,14 @@ in
   devops-env-c = import ./pkgs/devops-env-c { inherit pkgs; };
   myPackages = import ./pkgs/myPackages { inherit pkgs makeEmacsChemacsProfile; };
   kicad-5_1_12 = pkgs-with-kicad5.kicad;
+
+  offline-iso = nixos-generators.nixosGenerate {
+    inherit pkgs;
+    modules = [
+      # you can include your own nixos configuration here, i.e.
+      # ./configuration.nix
+      ./configurations/offline.nix
+    ];
+    format = "iso";
+  };
 }
