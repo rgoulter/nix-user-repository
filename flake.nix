@@ -45,10 +45,10 @@
           nixos-2105-pkgs = nixos-2105.legacyPackages.${system};
           fenix-pkgs = fenix.packages.${system};
         in
-        pkgs.callPackage ./shells/go {} //
-        pkgs.callPackage ./shells/python { inherit nixos-2105-pkgs; } //
-        pkgs.callPackage ./shells/rust { inherit fenix-pkgs; } //
-        pkgs.callPackage ./shells/terraform {});
+        import ./shells/go { inherit pkgs; } //
+        import ./shells/python { inherit pkgs nixos-2105-pkgs; } //
+        import ./shells/rust { inherit pkgs fenix-pkgs; } //
+        import ./shells/terraform { inherit pkgs; });
 
       packages = forAllSystems (system: import ./default.nix {
         inherit nixos-generators;

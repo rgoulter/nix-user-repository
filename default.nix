@@ -26,7 +26,7 @@ in
   devops-env-c = import ./pkgs/devops-env-c { inherit pkgs; };
   myPackages = import ./pkgs/myPackages { inherit pkgs makeEmacsChemacsProfile; };
   kicad-5_1_12 = pkgs-with-kicad5.kicad;
-
+} // (if pkgs.system == "x86_64-linux" then {
   offline-iso = nixos-generators.nixosGenerate {
     inherit pkgs;
     modules = [
@@ -34,4 +34,4 @@ in
     ];
     format = "iso";
   };
-}
+} else {})
