@@ -1,21 +1,21 @@
 {
   description = "My personal NUR repository";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-2105.url = "github:NixOS/nixpkgs/nixos-21.05";
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-with-kicad5 = {
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
       rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
-    };
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = { self, nixpkgs, nixos-2105, nixpkgs-with-kicad5, fenix, nixos-generators }:
@@ -38,6 +38,7 @@
           program = "${self.packages.${system}.kicad-5_1_12}/bin/kicad";
         };
       });
+
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -48,7 +49,9 @@
         pkgs.callPackage ./shells/python { inherit nixos-2105-pkgs; } //
         pkgs.callPackage ./shells/rust { inherit fenix-pkgs; } //
         pkgs.callPackage ./shells/terraform {});
+
       packages = forAllSystems (system: import ./default.nix {
+        inherit nixos-generators;
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
@@ -57,7 +60,6 @@
           inherit system;
           config.allowUnfree = true;
         };
-        inherit nixos-generators;
       });
     };
 }
