@@ -30,9 +30,7 @@ in
   offline-iso = nixos-generators.nixosGenerate {
     inherit pkgs;
     modules = [
-      # you can include your own nixos configuration here, i.e.
-      # ./configuration.nix
-      ./configurations/offline.nix
+      ./modules/installer/offline.nix
     ];
     format = "iso";
   };
