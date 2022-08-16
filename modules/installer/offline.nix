@@ -3,11 +3,20 @@
 #  passphrase, or manipulating PGP / GnuPG keys.
 { config, pkgs, ... }:
 
+let
+  gpg-quick-generate-master-key =
+    pkgs.writeScriptBin
+      "gpg-quick-generate-master-key"
+      (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
+in
 {
   environment.systemPackages = with pkgs; [
+    bash
     firefox
     fish
+    gawk
     gnupg
+    gpg-quick-generate-master-key
     keepassxc
     kitty
     monkeysphere
@@ -15,7 +24,10 @@
     openssh
     openssl
     paperkey
+    pinentry-gtk2
+    pinentry-gnome
     qrencode
+    yubico-piv-tool
     yubikey-manager
     yubikey-manager-qt
     yubikey-personalization-gui
