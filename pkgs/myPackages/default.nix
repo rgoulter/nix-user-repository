@@ -29,7 +29,7 @@ pkgs.buildEnv {
     awscli2
     aws-mfa
     babelfish
-    bash
+    bashInteractive
     bat
     bottom
     coreutils
