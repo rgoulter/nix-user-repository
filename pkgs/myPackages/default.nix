@@ -73,6 +73,8 @@ pkgs.buildEnv {
     openssh
     procps
     python38Packages.powerline
+    # Python 3 needed for Tmux extracto
+    python3
     qmk
     ripgrep
     # ruby needed for tmux-jump
@@ -115,6 +117,7 @@ pkgs.buildEnv {
     tdesktop
     thunderbird
     vlc
+    xclip
   ]);
   extraOutputsToInstall = [ "man" "doc" "info" ];
   pathsToLink = [
