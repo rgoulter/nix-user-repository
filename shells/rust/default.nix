@@ -32,8 +32,8 @@
       target = "wasm32-unknown-unknown";
       nightly = fenix-pkgs.toolchainOf {
           channel = "nightly";
-          date = "2022-04-20";
-          sha256 = "sha256-nJgASSAqGkaJ9svoIYVVYrw+YLF4E6AnG02nThtWXDo=";
+          date = "2022-05-11";
+          sha256 = "sha256-1kdpl1ryi1NL1pKWFUsm3sxGLn0TWRLl8QloOjSy668=";
         };
       toolchain = with fenix-pkgs;
         combine [
@@ -41,8 +41,8 @@
           nightly.rust-src
           (targets.${target}.toolchainOf {
             channel = "nightly";
-            date = "2022-04-20";
-            sha256 = "sha256-nJgASSAqGkaJ9svoIYVVYrw+YLF4E6AnG02nThtWXDo=";
+            date = "2022-05-11";
+            sha256 = "sha256-1kdpl1ryi1NL1pKWFUsm3sxGLn0TWRLl8QloOjSy668=";
           }).rust-std
         ];
     in
@@ -52,11 +52,15 @@
         pkgs.pkg-config
         pkgs.rust-analyzer
         toolchain
+        pkgs.pkg-config
+        pkgs.openssl # for cargo-dylint
+        # binaryen # for cargo contracts
       ];
 
       LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       PROTOC = "${pkgs.protobuf}/bin/protoc";
       ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contracts
     };
 }
