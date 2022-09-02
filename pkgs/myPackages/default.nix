@@ -93,7 +93,14 @@ pkgs.buildEnv {
     which
   ] ++ (lib.optionals true [
     # Unfree software; requires config.allowUnfree = true
-    vscode
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        matklad.rust-analyzer
+        ms-vscode.cpptools
+        vadimcn.vscode-lldb
+        # mkhl.direnv
+      ];
+    })
   ]) ++ (lib.optionals stdenv.isDarwin [
     # 2022-02-06: macOS testykchallengeresponsekey is failing
     # 2022-05-10: KeePass needs newer macOS
