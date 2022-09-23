@@ -71,7 +71,6 @@ pkgs.buildEnv {
     python38Packages.powerline
     # Python 3 needed for Tmux extracto
     python3
-    qmk
     ripgrep
     # ruby needed for tmux-jump
     ruby
@@ -123,6 +122,9 @@ pkgs.buildEnv {
     obs-studio
     onedrive
     pinentry_gtk2
+    # qmk: works on macOS, too,
+    # but my macOS is not very powerful
+    qmk
     slack
     spotify
     tdesktop
