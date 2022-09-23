@@ -31,6 +31,7 @@ pkgs.buildEnv {
     bashInteractive
     bat
     bottom
+    comma
     coreutils
     ctags
     direnv
@@ -134,6 +135,7 @@ pkgs.buildEnv {
       ];
     })
     xclip
+    yubikey-touch-detector
   ]);
   extraOutputsToInstall = [ "man" "doc" "info" ];
   pathsToLink = [
