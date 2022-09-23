@@ -32,8 +32,8 @@
       target = "wasm32-unknown-unknown";
       nightly = fenix-pkgs.toolchainOf {
           channel = "nightly";
-          date = "2022-05-11";
-          sha256 = "sha256-1kdpl1ryi1NL1pKWFUsm3sxGLn0TWRLl8QloOjSy668=";
+          date = "2022-06-22";
+          sha256 = "sha256-d1n/U+0DFbBnSF3IQHKCLeh2oITVXhghMtKwXQGEhgg=";
         };
       toolchain = with fenix-pkgs;
         combine [
@@ -41,8 +41,8 @@
           nightly.rust-src
           (targets.${target}.toolchainOf {
             channel = "nightly";
-            date = "2022-05-11";
-            sha256 = "sha256-1kdpl1ryi1NL1pKWFUsm3sxGLn0TWRLl8QloOjSy668=";
+            date = "2022-06-22";
+            sha256 = "sha256-d1n/U+0DFbBnSF3IQHKCLeh2oITVXhghMtKwXQGEhgg=";
           }).rust-std
         ];
     in
