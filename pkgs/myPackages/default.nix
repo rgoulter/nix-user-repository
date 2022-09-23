@@ -51,8 +51,7 @@ pkgs.buildEnv {
     gawk
     git
     gitAndTools.tig
-    # 2022-06-13: didn't build on macos
-    # glances
+    glances
     gnupg
     google-cloud-sdk
     helix
@@ -60,15 +59,12 @@ pkgs.buildEnv {
     jq
     k9s
     kakoune
-    # 2022-01-23: macOS: kitty tests failed w/ permission issues
-    (kitty.overrideAttrs (_: { doInstallCheck = false; }))
+    kitty
     kubectl
     lazydocker
     lazygit
     less
-    # 2021-01-26: macOS: neovim, temporarily broken
-    # https://github.com/NixOS/nixpkgs/pull/155688
-    (wrapNeovim (neovim-unwrapped.overrideAttrs (_: { NIX_LDFLAGS = [ ]; })) { })
+    neovim
     nix
     openssh
     procps
