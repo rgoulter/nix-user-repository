@@ -87,28 +87,27 @@ pkgs.buildEnv {
     wget
     which
   ] ++ (lib.optionals true [
-    # Unfree software; requires config.allowUnfree = true
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        matklad.rust-analyzer
-        ms-python.python
-        ms-vscode.cpptools
-        vadimcn.vscode-lldb
-        # mkhl.direnv
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "direnv";
-          publisher = "mkhl";
-          version = "0.6.1";
-          sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
-        }
-      ];
-    })
   ]) ++ (lib.optionals stdenv.isDarwin [
     # 2022-02-06: macOS testykchallengeresponsekey is failing
     # 2022-05-10: KeePass needs newer macOS
     # (keepassxc.overrideAttrs (_: { doCheck = false; }))
     pinentry_mac
+    # Unfree software; requires config.allowUnfree = true
+    vscode
+    # (vscode-with-extensions.override {
+    #   vscodeExtensions = with vscode-extensions; [
+    #     matklad.rust-analyzer
+    #     ms-python.python
+    #     # mkhl.direnv
+    #   ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    #     {
+    #       name = "direnv";
+    #       publisher = "mkhl";
+    #       version = "0.6.1";
+    #       sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
+    #     }
+    #   ];
+    # })
   ]) ++ (lib.optionals stdenv.isLinux [
     desktop-file-utils
     (firefox.override {
@@ -130,6 +129,23 @@ pkgs.buildEnv {
     tdesktop
     thunderbird
     vlc
+    # Unfree software; requires config.allowUnfree = true
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        matklad.rust-analyzer
+        ms-python.python
+        ms-vscode.cpptools
+        vadimcn.vscode-lldb
+        # mkhl.direnv
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "direnv";
+          publisher = "mkhl";
+          version = "0.6.1";
+          sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
+        }
+      ];
+    })
     xclip
   ]);
   extraOutputsToInstall = [ "man" "doc" "info" ];
