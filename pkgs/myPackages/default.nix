@@ -21,7 +21,6 @@ pkgs.buildEnv {
       mkdir -p $out/etc/profile.d
       cp ${myProfile} $out/etc/profile.d/my-profile.sh
     '')
-    alacritty
     aspell
     aspellDicts.en
     aspellDicts.en-computers
@@ -47,18 +46,14 @@ pkgs.buildEnv {
     findutils
     fish
     fzf
-    fzy
     gawk
     git
     gitAndTools.tig
     glances
     gnupg
-    google-cloud-sdk
     helix
     htop
     jq
-    k9s
-    kakoune
     kitty
     kubectl
     lazydocker
@@ -74,16 +69,9 @@ pkgs.buildEnv {
     ripgrep
     # ruby needed for tmux-jump
     ruby
-    safe
-    silver-searcher
-    skim
     starship
-    texinfoInteractive
     tldr
-    tmate
     tmux
-    tree
-    vim
     wget
     which
   ] ++ (lib.optionals true [
@@ -117,8 +105,6 @@ pkgs.buildEnv {
     })
     google-chrome
     keepassxc
-    lens
-    obs-studio
     onedrive
     pinentry_gtk2
     # qmk: works on macOS, too,
