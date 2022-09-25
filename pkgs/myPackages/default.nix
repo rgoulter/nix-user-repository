@@ -79,6 +79,7 @@ pkgs.buildEnv {
     # 2022-02-06: macOS testykchallengeresponsekey is failing
     # 2022-05-10: KeePass needs newer macOS
     # (keepassxc.overrideAttrs (_: { doCheck = false; }))
+    pinentry
     pinentry_mac
     # Unfree software; requires config.allowUnfree = true
     vscode
