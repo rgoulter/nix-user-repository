@@ -50,6 +50,17 @@
         import ./shells/rust { inherit pkgs fenix-pkgs; } //
         import ./shells/terraform { inherit pkgs; });
 
+      nixosModules = {
+        bluetooth-headset = import ./modules/bluetooth-headset.nix;
+        desktops = import ./modules/desktops.nix;
+        keyboards = import ./modules/keyboards.nix;
+        printing = import ./modules/printing.nix;
+        users = import ./modules/users.nix;
+        virtualization = import ./modules/virtualization.nix;
+        vn = import ./modules/vn.nix;
+        yubikey = import ./modules/yubikey.nix;
+      };
+
       packages = forAllSystems (system: import ./default.nix {
         inherit nixos-generators;
         pkgs = import nixpkgs {
