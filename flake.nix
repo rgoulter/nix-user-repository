@@ -61,16 +61,37 @@
         yubikey = import ./modules/yubikey.nix;
       };
 
-      packages = forAllSystems (system: import ./default.nix {
-        inherit nixos-generators;
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      });
+      packages = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          pkgsUnfree = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
+            inherit system;
+            # config.allowUnfree = true;
+          };
+        in
+        import ./pkgs { inherit pkgs; } //
+        (if pkgs.system == "x86_64-linux" then {
+          offline-iso = nixos-generators.nixosGenerate {
+            inherit pkgs;
+            format = "iso";
+            modules = [
+              ./modules/installer/offline.nix
+            ];
+          };
+        } else {}) //
+        {
+          devops-env-c = import ./pkgs/devops-env-c { inherit pkgs; };
+          kicad-5_1_12 = pkgs-with-kicad5.kicad;
+          myPackages = import ./pkgs/myPackages {
+            makeEmacsChemacsProfile =
+              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+            pkgs = pkgsUnfree;
+          };
+        }
+      );
     };
 }

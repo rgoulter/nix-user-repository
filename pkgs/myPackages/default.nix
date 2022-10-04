@@ -105,6 +105,7 @@ pkgs.buildEnv {
         enableTridactylNative = true;
       };
     })
+    # Unfree software; requires config.allowUnfree = true
     google-chrome
     keepassxc
     onedrive
