@@ -32,8 +32,7 @@
     in
     {
       apps = forAllSystems (system: {
-        kicad5 = self.apps.${system}.kicad-5_1_12;
-        kicad-5_1_12 = {
+        kicad5 = {
           type = "app";
           program = "${self.packages.${system}.kicad-5_1_12}/bin/kicad";
         };
