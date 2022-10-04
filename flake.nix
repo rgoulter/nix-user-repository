@@ -45,10 +45,8 @@
           nixos-2105-pkgs = nixos-2105.legacyPackages.${system};
           fenix-pkgs = fenix.packages.${system};
         in
-        import ./shells/go { inherit pkgs; } //
-        import ./shells/python { inherit pkgs nixos-2105-pkgs; } //
-        import ./shells/rust { inherit pkgs fenix-pkgs; } //
-        import ./shells/terraform { inherit pkgs; });
+        import ./shells { inherit pkgs fenix-pkgs; } //
+        import ./shells/python/old.nix { inherit nixos-2105-pkgs; });
 
       nixosModules = {
         bluetooth-headset = import ./modules/bluetooth-headset.nix;
