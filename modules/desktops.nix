@@ -8,6 +8,8 @@
     source-code-pro
   ];
 
+  networking.networkmanager.enable = true;
+
   services = {
     xserver = {
       desktopManager.xfce.enable = true;
