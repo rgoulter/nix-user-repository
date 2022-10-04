@@ -113,7 +113,9 @@ pkgs.buildEnv {
     # qmk: works on macOS, too,
     # but my macOS is not very powerful
     qmk
+    # Unfree software; requires config.allowUnfree = true
     slack
+    # Unfree software; requires config.allowUnfree = true
     spotify
     tdesktop
     thunderbird
