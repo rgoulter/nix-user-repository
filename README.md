@@ -21,3 +21,72 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
 
 - Apps
   - Kicad (`kicad5`)
+
+## Using NixOS Modules in a NixOS Configuration
+
+A `flake.nix` making use of the NixOS modules might look like:
+
+``` nix
+{
+  inputs = {
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    rgoulter.url = "github:rgoulter/nix-user-repository";
+  };
+
+  outputs = { self, nixos-hardware, nixpkgs, rgoulter }: {
+    nixosConfigurations = {
+      YOUR-HOSTNAME = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./configuration.nix
+          rgoulter.nixosModules.bluetooth-headset
+          rgoulter.nixosModules.virtualization
+          # etc.
+          self.nixosModules.system-hardware
+        ];
+      };
+    };
+    nixosModules = {
+      system-hardware = import ./hardware-desktop.nix { inherit nixos-hardware; };
+    };
+  };
+}
+```
+
+e.g. where `hardware-desktop.nix` may be something like:
+
+``` nix
+{ nixos-hardware }:
+
+{
+  imports =
+    [
+      nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+      nixos-hardware.nixosModules.common-gpu-nvidia
+      nixos-hardware.nixosModules.common-pc
+      nixos-hardware.nixosModules.common-pc-ssd
+      nixos-hardware.nixosModules.common-pc-hdd
+    ];
+}
+```
+
+On a computer with hostname `YOUR-HOSTNAME`, this can then be built with:
+
+``` sh
+$ nixos-rebuild build --flake .
+```
+
+or to set as the default boot entry:
+
+``` sh
+# nixos-rebuild boot --flake .
+```
+
+If using [specialisations](https://nixos.wiki/wiki/Specialisation) (e.g. the
+`desktops` module), note that the command to switch configuration is, e.g. for `gnome`:
+
+``` sh
+/nix/var/nix/profiles/system/specialisation/gnome/bin/switch-to-configuration switch
+```
+
