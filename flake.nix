@@ -48,16 +48,7 @@
         import ./shells { inherit pkgs fenix-pkgs; } //
         import ./shells/python/old.nix { inherit nixos-2105-pkgs; });
 
-      nixosModules = {
-        bluetooth-headset = import ./modules/bluetooth-headset.nix;
-        desktops = import ./modules/desktops.nix;
-        keyboards = import ./modules/keyboards.nix;
-        printing = import ./modules/printing.nix;
-        users = import ./modules/users.nix;
-        virtualization = import ./modules/virtualization.nix;
-        vn = import ./modules/vn.nix;
-        yubikey = import ./modules/yubikey.nix;
-      };
+      nixosModules = import ./modules;
 
       packages = forAllSystems (system:
         let
