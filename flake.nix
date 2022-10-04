@@ -61,17 +61,19 @@
             inherit system;
             # config.allowUnfree = true;
           };
+          nixos-images =
+            if pkgs.system == "x86_64-linux" then {
+              offline-iso = nixos-generators.nixosGenerate {
+                inherit pkgs;
+                format = "iso";
+                modules = [
+                  ./modules/installer/offline.nix
+                ];
+              };
+            } else {};
         in
         import ./pkgs { inherit pkgs; } //
-        (if pkgs.system == "x86_64-linux" then {
-          offline-iso = nixos-generators.nixosGenerate {
-            inherit pkgs;
-            format = "iso";
-            modules = [
-              ./modules/installer/offline.nix
-            ];
-          };
-        } else {}) //
+        nixos-images //
         {
           devops-env-c = import ./pkgs/devops-env-c { inherit pkgs; };
           kicad-5_1_12 = pkgs-with-kicad5.kicad;
