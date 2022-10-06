@@ -16,8 +16,6 @@
       enable = true;
 
       layout = "us";
-
-      videoDrivers = [ "nvidia" ];
     };
   };
 }
