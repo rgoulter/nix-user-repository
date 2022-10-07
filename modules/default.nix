@@ -1,6 +1,6 @@
 {
   bluetooth-headset = import ./bluetooth-headset.nix;
-  desktops = import ./desktops.nix;
+  desktop = import ./desktop.nix;
   keyboards = import ./keyboards.nix;
   printing = import ./printing.nix;
   specialisations = import ./specialisations.nix;
