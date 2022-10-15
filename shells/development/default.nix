@@ -1,5 +1,5 @@
 {pkgs ? import <nixpkgs> {}}: {
-  bash = pkgs.mkShell {
+  development = pkgs.mkShell {
     packages = with pkgs; [
       fd
       fzf
