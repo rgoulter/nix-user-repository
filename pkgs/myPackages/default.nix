@@ -116,7 +116,7 @@ in
         google-chrome
         keepassxc
         onedrive
-        pinentry_gtk2
+        pinentry-gtk2
         # qmk: works on macOS, too,
         # but my macOS is not very powerful
         qmk
