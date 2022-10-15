@@ -21,7 +21,7 @@ pkgs.buildEnv {
     jq
     k9s
     kubectl
-    mysql
+    mariadb
     lazydocker
     lazygit
     less
