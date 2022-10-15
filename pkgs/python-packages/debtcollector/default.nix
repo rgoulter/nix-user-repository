@@ -1,11 +1,11 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pbr
-, six
-, wrapt
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pbr,
+  six,
+  wrapt,
 }:
-
 buildPythonPackage rec {
   pname = "debtcollector";
   version = "2.3.0";
@@ -27,6 +27,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/debtcollector/latest";
     description = "A collection of Python deprecation patterns and strategies that help you collect your technical debt in a non-destructive manner.";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

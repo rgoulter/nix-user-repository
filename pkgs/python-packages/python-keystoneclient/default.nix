@@ -1,14 +1,14 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, keystoneauth1
-, oslo_config
-, oslo_serialization
-, requests
-, pbr
-, six
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  keystoneauth1,
+  oslo_config,
+  oslo_serialization,
+  requests,
+  pbr,
+  six,
 }:
-
 buildPythonPackage rec {
   pname = "python-keystoneclient";
   version = "4.3.0";
@@ -33,6 +33,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/python-keystoneclient/latest/";
     description = "This is a client for the OpenStack Identity API, implemented by the Keystone team.";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

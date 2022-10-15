@@ -1,12 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, keystoneauth1
-, oslo_serialization
-, pbr
-, prettytable
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  keystoneauth1,
+  oslo_serialization,
+  pbr,
+  prettytable,
 }:
-
 buildPythonPackage rec {
   pname = "python-novaclient";
   version = "17.6.0";
@@ -29,6 +29,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/python-novaclient/latest";
     description = "This is a client for the OpenStack Compute API.";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

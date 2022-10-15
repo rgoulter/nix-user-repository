@@ -1,9 +1,9 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pbr
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pbr,
 }:
-
 buildPythonPackage rec {
   pname = "os-service-types";
   version = "1.7.0";
@@ -23,6 +23,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/os-service-types/latest/";
     description = "Python library for consuming OpenStack sevice-types-authority data";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

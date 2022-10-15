@@ -1,11 +1,15 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # Enable Vietnamese IME.
 {
   environment.variables = {
-    GTK_IM_MODULE="fcitx";
-    QT_IM_MODULE="fcitx";
-    XMODIFIERS="@im=fcitx";
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
   };
 
   i18n.inputMethod.enabled = "fcitx5";

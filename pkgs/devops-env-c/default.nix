@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.buildEnv {
   name = "devops-env-c";
   paths = with pkgs; [
@@ -37,5 +36,5 @@ pkgs.buildEnv {
     wget
     which
   ];
-  pathsToLink = [ "/bin" "/lib" "/share" ];
+  pathsToLink = ["/bin" "/lib" "/share"];
 }

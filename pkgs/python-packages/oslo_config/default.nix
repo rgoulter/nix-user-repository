@@ -1,16 +1,16 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, debtcollector
-, netaddr
-, oslo_i18n
-, pbr
-, pyyaml
-, requests
-, rfc3986
-, stevedore
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  debtcollector,
+  netaddr,
+  oslo_i18n,
+  pbr,
+  pyyaml,
+  requests,
+  rfc3986,
+  stevedore,
 }:
-
 buildPythonPackage rec {
   pname = "oslo.config";
   version = "8.7.1";
@@ -37,6 +37,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/oslo.config/latest/";
     description = "The Oslo configuration API supports parsing command line arguments and .ini style configuration files.";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

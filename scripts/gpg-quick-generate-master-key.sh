@@ -12,7 +12,7 @@ EXPIRY=90d
 gpg --quick-generate-key "${NAME_AND_EMAIL}" default sign "${EXPIRY}"
 
 FINGERPRINT=$(
-  gpg --list-secret-keys --with-colons "${NAME_AND_EMAIL}" | \
+  gpg --list-secret-keys --with-colons "${NAME_AND_EMAIL}" |
     awk -F ':' '/fpr/ { print $10; exit; }'
 )
 

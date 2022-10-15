@@ -1,15 +1,16 @@
 # offline.nix - NixOS configuration for an "offline"
 #  NixOS ISO, for e.g. generating a KeePassXC diceware
 #  passphrase, or manipulating PGP / GnuPG keys.
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   gpg-quick-generate-master-key =
     pkgs.writeScriptBin
-      "gpg-quick-generate-master-key"
-      (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
-in
-{
+    "gpg-quick-generate-master-key"
+    (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
+in {
   environment.systemPackages = with pkgs; [
     bash
     firefox
@@ -41,7 +42,7 @@ in
 
     printing = {
       enable = true;
-      drivers = [ pkgs.brlaser ];
+      drivers = [pkgs.brlaser];
     };
 
     udev.packages = [
@@ -62,7 +63,7 @@ in
 
       enable = true;
 
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = ["nvidia"];
 
       layout = "us";
     };
@@ -88,4 +89,3 @@ in
     uid = 1000;
   };
 }
-

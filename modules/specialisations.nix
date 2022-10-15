@@ -1,13 +1,16 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   specialisation = {
     gnome.configuration = {
       services.xserver = {
         desktopManager.gnome.enable = true;
         displayManager.gdm.enable = true;
       };
-      system.nixos.tags = [ "gnome" ];
+      system.nixos.tags = ["gnome"];
     };
     pantheon.configuration = {
       services.xserver = {
@@ -22,7 +25,7 @@
           lightdm.enable = true;
         };
       };
-      system.nixos.tags = [ "pantheon" ];
+      system.nixos.tags = ["pantheon"];
     };
     xfce.configuration = {
       networking.networkmanager.enable = true;
@@ -35,7 +38,7 @@
           gdm.enable = false;
         };
       };
-      system.nixos.tags = [ "gnome" ];
+      system.nixos.tags = ["gnome"];
     };
   };
 }

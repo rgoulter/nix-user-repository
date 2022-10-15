@@ -1,6 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
-
-{
+{pkgs ? import <nixpkgs> {}}: {
   python_3_7 = pkgs.mkShell {
     packages = with pkgs; [
       libffi

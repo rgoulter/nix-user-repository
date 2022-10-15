@@ -1,5 +1,10 @@
-{ lib, buildGoModule, fetchFromGitHub, go-bindata, installShellFiles }:
-
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  go-bindata,
+  installShellFiles,
+}:
 buildGoModule rec {
   pname = "istioctl";
   version = "1.7.8";
@@ -14,7 +19,7 @@ buildGoModule rec {
 
   doCheck = false;
 
-  nativeBuildInputs = [ go-bindata installShellFiles ];
+  nativeBuildInputs = [go-bindata installShellFiles];
 
   # istioctl -> istioctl-1.7.8
   patches = [./istioctl-cmd.patch];
@@ -26,18 +31,16 @@ buildGoModule rec {
   '';
 
   # Bundle release metadata
-  ldflags =
-    let
-      attrs = [
-        "istio.io/pkg/version.buildVersion=${version}"
-        "istio.io/pkg/version.buildStatus=Nix"
-        "istio.io/pkg/version.buildTag=${version}"
-        "istio.io/pkg/version.buildHub=docker.io/istio"
-      ];
-    in
-    [ "-s" "-w" "${lib.concatMapStringsSep " " (attr: "-X ${attr}") attrs}" ];
+  ldflags = let
+    attrs = [
+      "istio.io/pkg/version.buildVersion=${version}"
+      "istio.io/pkg/version.buildStatus=Nix"
+      "istio.io/pkg/version.buildTag=${version}"
+      "istio.io/pkg/version.buildHub=docker.io/istio"
+    ];
+  in ["-s" "-w" "${lib.concatMapStringsSep " " (attr: "-X ${attr}") attrs}"];
 
-  subPackages = [ "istioctl/cmd/istioctl" ];
+  subPackages = ["istioctl/cmd/istioctl"];
 
   postInstall = ''
     mv $out/bin/istioctl $out/bin/istioctl-${version}
@@ -51,7 +54,7 @@ buildGoModule rec {
     description = "Istio configuration command line utility for service operators to debug and diagnose their Istio mesh";
     homepage = "https://istio.io/latest/docs/reference/commands/istioctl";
     license = licenses.asl20;
-    maintainers = with maintainers; [ veehaitch ];
+    maintainers = with maintainers; [veehaitch];
     platforms = platforms.unix;
   };
 }

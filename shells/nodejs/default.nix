@@ -1,6 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
-
-{
+{pkgs ? import <nixpkgs> {}}: {
   nodejs = pkgs.mkShell {
     packages = with pkgs; [
       nodejs

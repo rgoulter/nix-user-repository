@@ -1,9 +1,13 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # Brother laser printer
 {
   services.printing = {
     enable = true;
-    drivers = [ pkgs.brlaser ];
+    drivers = [pkgs.brlaser];
   };
 }

@@ -1,19 +1,19 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, appdirs
-, cryptography
-, dogpile_cache
-, jmespath
-, jsonpatch
-, keystoneauth1
-, munch
-, netifaces
-, pbr
-, pyyaml
-, requestsexceptions
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  appdirs,
+  cryptography,
+  dogpile_cache,
+  jmespath,
+  jsonpatch,
+  keystoneauth1,
+  munch,
+  netifaces,
+  pbr,
+  pyyaml,
+  requestsexceptions,
 }:
-
 buildPythonPackage rec {
   pname = "openstacksdk";
   version = "0.59.0";
@@ -43,6 +43,6 @@ buildPythonPackage rec {
     homepage = "https://docs.openstack.org/openstacksdk/";
     description = "openstacksdk is a client library for building applications to work with OpenStack clouds.";
     license = licenses.asl20;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

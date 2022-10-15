@@ -1,6 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
-
-{
+{pkgs ? import <nixpkgs> {}}: {
   go = pkgs.mkShell {
     packages = with pkgs; [
       go

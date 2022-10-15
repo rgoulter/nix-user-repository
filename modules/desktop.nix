@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   fonts.fonts = with pkgs; [
     noto-fonts
     noto-fonts-extra
