@@ -28,20 +28,14 @@
   }: let
     systems = [
       "x86_64-linux"
-      "i686-linux"
       "x86_64-darwin"
-      "aarch64-linux"
-      "armv6l-linux"
-      "armv7l-linux"
     ];
     forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
   in {
-    apps = forAllSystems (system: {
-      kicad5 = {
-        type = "app";
-        program = "${self.packages.${system}.kicad-5_1_12}/bin/kicad";
-      };
-    });
+    apps.x86_64-linux.kicad5 = {
+      type = "app";
+      program = "${self.packages.x86_64-linux.kicad-5_1_12}/bin/kicad";
+    };
 
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
@@ -63,41 +57,46 @@
 
     nixosModules = import ./modules;
 
-    packages = forAllSystems (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        pkgsUnfree = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
-          inherit system;
-          # config.allowUnfree = true;
-        };
-        nixos-images =
-          if pkgs.system == "x86_64-linux"
-          then {
-            offline-iso = nixos-generators.nixosGenerate {
-              inherit pkgs;
-              format = "iso";
-              modules = [
-                ./modules/installer/offline.nix
-              ];
+    packages =
+      forAllSystems (
+        system: let
+          pkgs = nixpkgs.legacyPackages.${system};
+          pkgsUnfree = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          nixos-images =
+            if pkgs.system == "x86_64-linux"
+            then {
+              offline-iso = nixos-generators.nixosGenerate {
+                inherit pkgs;
+                format = "iso";
+                modules = [
+                  ./modules/installer/offline.nix
+                ];
+              };
+            }
+            else {};
+        in
+          import ./pkgs {inherit pkgs;}
+          // nixos-images
+          // {
+            devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
+            myPackages = import ./pkgs/myPackages {
+              makeEmacsChemacsProfile =
+                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+              pkgs = pkgsUnfree;
             };
           }
-          else {};
-      in
-        import ./pkgs {inherit pkgs;}
-        // nixos-images
-        // {
-          devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-          kicad-5_1_12 = pkgs-with-kicad5.kicad;
-          myPackages = import ./pkgs/myPackages {
-            makeEmacsChemacsProfile =
-              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-            pkgs = pkgsUnfree;
+      )
+      // {
+        x86_64-linux.kicad-5_1_12 = let
+          pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
+            system = "x86_64-linux";
+            # config.allowUnfree = true;
           };
-        }
-    );
+        in
+          pkgs-with-kicad5.kicad;
+      };
   };
 }
