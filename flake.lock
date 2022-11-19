@@ -73,6 +73,26 @@
         "type": "github"
       }
     },
+    "nixos-shell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1646257415,
+        "narHash": "sha256-whHBBcthLhEIy2VTaioRZOSZoZR7pk4Qr4DVxwU0r9Y=",
+        "owner": "Mic92",
+        "repo": "nixos-shell",
+        "rev": "55de7d4d449ff30cdde8b8fe484a86eef477245e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nixos-shell",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1668681245,
@@ -110,6 +130,7 @@
         "fenix": "fenix",
         "nixos-2105": "nixos-2105",
         "nixos-generators": "nixos-generators",
+        "nixos-shell": "nixos-shell",
         "nixpkgs": "nixpkgs",
         "nixpkgs-with-kicad5": "nixpkgs-with-kicad5"
       }

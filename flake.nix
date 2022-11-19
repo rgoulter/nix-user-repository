@@ -10,6 +10,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-shell = {
+      url = "github:Mic92/nixos-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-with-kicad5 = {
       type = "github";
@@ -25,6 +29,7 @@
     nixpkgs-with-kicad5,
     fenix,
     nixos-generators,
+    nixos-shell,
   }: let
     systems = [
       "x86_64-linux"
@@ -54,6 +59,16 @@
           ];
         };
       });
+
+    nixosConfigurations = {
+      "offline-iso" = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./modules/installer/offline.nix
+          nixos-shell.nixosModules.nixos-shell
+        ];
+      };
+    };
 
     nixosModules = import ./modules;
 
