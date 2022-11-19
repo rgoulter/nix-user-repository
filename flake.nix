@@ -57,44 +57,43 @@
 
     nixosModules = import ./modules;
 
-    packages =
-      forAllSystems (
-        system: let
-          pkgs = nixpkgs.legacyPackages.${system};
-          pkgsUnfree = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
+    packages = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgsUnfree = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in
+        import ./pkgs {inherit pkgs;}
+        // {
+          devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
+          myPackages = import ./pkgs/myPackages {
+            makeEmacsChemacsProfile =
+              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+            pkgs = pkgsUnfree;
           };
-        in
-          import ./pkgs {inherit pkgs;}
-          // {
-            devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-            myPackages = import ./pkgs/myPackages {
-              makeEmacsChemacsProfile =
-                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-              pkgs = pkgsUnfree;
+        }
+        // (
+          if system == "x86_64-linux"
+          then {
+            kicad-5_1_12 = let
+              pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
+                inherit system;
+                # config.allowUnfree = true;
+              };
+            in
+              pkgs-with-kicad5.kicad;
+            offline-iso = nixos-generators.nixosGenerate {
+              pkgs = nixpkgs.legacyPackages.${system};
+              format = "iso";
+              modules = [
+                ./modules/installer/offline.nix
+              ];
             };
           }
-      )
-      // {
-        x86_64-linux = let
-          system = "x86_64-linux";
-        in {
-          kicad-5_1_12 = let
-            pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
-              inherit system;
-              # config.allowUnfree = true;
-            };
-          in
-            pkgs-with-kicad5.kicad;
-          offline-iso = nixos-generators.nixosGenerate {
-            pkgs = nixpkgs.legacyPackages.${system};
-            format = "iso";
-            modules = [
-              ./modules/installer/offline.nix
-            ];
-          };
-        };
-      };
+          else {}
+        )
+    );
   };
 }
