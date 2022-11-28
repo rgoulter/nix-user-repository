@@ -87,6 +87,10 @@
       in
         import ./pkgs {inherit pkgs;}
         // {
+          blockchain = import ./pkgs/blockchain {
+            inherit pkgs naersk;
+            fenix = fenix.packages.${system};
+          };
           devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
           myPackages = import ./pkgs/myPackages {
             makeEmacsChemacsProfile =
