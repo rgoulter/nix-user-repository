@@ -5,6 +5,10 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    naersk = {
+      url = "github:nix-community/naersk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-2105.url = "github:NixOS/nixpkgs/nixos-21.05";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -24,6 +28,7 @@
   };
   outputs = {
     self,
+    naersk,
     nixpkgs,
     nixos-2105,
     nixpkgs-with-kicad5,
