@@ -59,6 +59,6 @@
       PROTOC = "${pkgs.protobuf}/bin/protoc";
       ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
-      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contracts
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contract
     };
 }
