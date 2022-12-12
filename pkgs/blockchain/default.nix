@@ -2,8 +2,6 @@
   pkgs,
   fenix,
   naersk,
-}@inputs:
-
-{
+} @ inputs: {
   polkadot = import ./polkadot inputs;
 }
