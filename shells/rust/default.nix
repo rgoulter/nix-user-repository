@@ -27,20 +27,17 @@
 
   rust_wasm32-unknown-unknown = let
     target = "wasm32-unknown-unknown";
-    nightly = fenix-pkgs.toolchainOf {
+    nightlyVersion = {
       channel = "nightly";
-      date = "2022-06-22";
-      sha256 = "sha256-d1n/U+0DFbBnSF3IQHKCLeh2oITVXhghMtKwXQGEhgg=";
+      date = "2022-12-22";
+      sha256 = "sha256-FK01QQuXkFXuy/W7wzAA0G+T2s9dQIDBjMxMC0cUk2M=";
     };
+    nightly = fenix-pkgs.toolchainOf nightlyVersion;
     toolchain = with fenix-pkgs;
       combine [
         nightly.defaultToolchain
         nightly.rust-src
-        (targets.${target}.toolchainOf {
-          channel = "nightly";
-          date = "2022-06-22";
-          sha256 = "sha256-d1n/U+0DFbBnSF3IQHKCLeh2oITVXhghMtKwXQGEhgg=";
-        })
+        (targets.${target}.toolchainOf nightlyVersion)
         .rust-std
       ];
   in
