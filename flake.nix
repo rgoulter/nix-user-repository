@@ -97,6 +97,11 @@
               pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
             pkgs = pkgsUnfree;
           };
+          myPackages-lite = import ./pkgs/myPackages/lite.nix {
+            makeEmacsChemacsProfile =
+              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+            pkgs = pkgsUnfree;
+          };
         }
         // (
           if system == "x86_64-linux"
