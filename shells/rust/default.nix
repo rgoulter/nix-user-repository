@@ -26,20 +26,12 @@
     };
 
   rust_wasm32-unknown-unknown = let
-    target = "wasm32-unknown-unknown";
-    nightlyVersion = {
-      channel = "nightly";
-      date = "2022-12-22";
-      sha256 = "sha256-FK01QQuXkFXuy/W7wzAA0G+T2s9dQIDBjMxMC0cUk2M=";
-    };
-    nightly = fenix-pkgs.toolchainOf nightlyVersion;
     toolchain = with fenix-pkgs;
-      combine [
-        nightly.defaultToolchain
-        nightly.rust-src
-        (targets.${target}.toolchainOf nightlyVersion)
-        .rust-std
-      ];
+      fromToolchainFile {
+        file = ./rust-toolchain.toml;
+        sha256 = "sha256-FK01QQuXkFXuy/W7wzAA0G+T2s9dQIDBjMxMC0cUk2M=";
+      };
+
   in
     pkgs.mkShell {
       buildInputs = [
@@ -47,7 +39,6 @@
         pkgs.pkg-config
         pkgs.rust-analyzer
         toolchain
-        pkgs.pkg-config
         pkgs.openssl # for cargo-dylint
         # binaryen # for cargo contracts
       ];
