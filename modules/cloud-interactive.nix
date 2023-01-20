@@ -13,7 +13,9 @@
     fish
     git
     helix
+    jq
     ripgrep
+    starship
     tmux
   ];
   nix = {
