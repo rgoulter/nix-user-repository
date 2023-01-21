@@ -1,4 +1,7 @@
-{pkgs ? import <nixpkgs> {}}: {
+{
+  pkgs ? import <nixpkgs> {},
+  languages,
+}: {
   python_3_7 = pkgs.mkShell {
     packages = with pkgs; [
       libffi
@@ -31,14 +34,7 @@
     ];
   };
   python_3_10 = pkgs.mkShell {
-    packages = with pkgs; [
-      libffi
-      python310
-      python310.pkgs.python-lsp-server
-      pyright
-    ];
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.stdenv.cc.cc.lib
-    ];
+    inherit (languages.python) packages;
+    inherit (languages.python.environment) LD_LIBRARY_PATH;
   };
 }

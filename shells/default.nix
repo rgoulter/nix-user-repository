@@ -1,13 +1,15 @@
 {
   pkgs,
   fenix-pkgs,
-}:
-import ./bash {inherit pkgs;}
-// import ./development {inherit pkgs;}
-// import ./go {inherit pkgs;}
-// import ./haskell {inherit pkgs;}
-// import ./nix {inherit pkgs;}
-// import ./nodejs {inherit pkgs;}
-// import ./python {inherit pkgs;}
-// import ./rust {inherit pkgs fenix-pkgs;}
-// import ./terraform {inherit pkgs;}
+}: let
+  languages = import ../lib/languages {inherit fenix-pkgs pkgs;};
+in
+  import ./bash {inherit languages pkgs;}
+  // import ./development {inherit pkgs;}
+  // import ./go {inherit languages pkgs;}
+  // import ./haskell {inherit languages pkgs;}
+  // import ./nix {inherit languages pkgs;}
+  // import ./nodejs {inherit languages pkgs;}
+  // import ./python {inherit languages pkgs;}
+  // import ./rust {inherit languages pkgs;}
+  // import ./terraform {inherit languages pkgs;}

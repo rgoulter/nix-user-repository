@@ -1,10 +1,8 @@
-{pkgs ? import <nixpkgs> {}}: {
+{
+  pkgs ? import <nixpkgs> {},
+  languages,
+}: {
   nix = pkgs.mkShell {
-    packages = with pkgs; [
-      alejandra
-      nix
-      nix-linter
-      rnix-lsp
-    ];
+    inherit (languages.nix) packages;
   };
 }

@@ -1,52 +1,21 @@
 {
   pkgs ? import <nixpkgs> {},
-  fenix-pkgs ?
-    import (
-      fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"
-    ) {},
+  languages,
 }: {
-  rust_thumbv7em-none-eabihf = let
-    target = "thumbv7em-none-eabihf";
-    toolchain = with fenix-pkgs;
-      combine [
-        complete.llvm-tools-preview
-        complete.rust-src
-        default.rustfmt
-        default.cargo
-        default.rustc
-        targets.${target}.latest.rust-std
-      ];
-  in
-    pkgs.mkShell {
-      nativeBuildInputs = [
-        pkgs.rust-analyzer
-        toolchain
-      ];
-      RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
-    };
+  rust_thumbv7em-none-eabihf = pkgs.mkShell {
+    inherit (languages.rust_thumbv7em-none-eabihf.environment) RUST_SRC_PATH;
+    nativeBuildInputs = languages.rust_thumbv7em-none-eabihf.packages;
+  };
 
-  rust_wasm32-unknown-unknown = let
-    toolchain = with fenix-pkgs;
-      fromToolchainFile {
-        file = ./rust-toolchain.toml;
-        sha256 = "sha256-FK01QQuXkFXuy/W7wzAA0G+T2s9dQIDBjMxMC0cUk2M=";
-      };
-
-  in
-    pkgs.mkShell {
-      buildInputs = [
-        pkgs.clang
-        pkgs.pkg-config
-        pkgs.rust-analyzer
-        toolchain
-        pkgs.openssl # for cargo-dylint
-        # binaryen # for cargo contracts
-      ];
-
-      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
-      PROTOC = "${pkgs.protobuf}/bin/protoc";
-      ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
-      RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
-      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contract
-    };
+  rust_wasm32-unknown-unknown = pkgs.mkShell {
+    inherit
+      (languages.rust_wasm32-unknown-unknown.environment)
+      LIBCLANG_PATH
+      PKG_CONFIG_PATH
+      PROTOC
+      ROCKSDB_LIB_DIR
+      RUST_SRC_PATH
+      ;
+    buildInputs = languages.rust_wasm32-unknown-unknown.packages;
+  };
 }

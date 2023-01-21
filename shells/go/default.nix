@@ -1,9 +1,9 @@
-{pkgs ? import <nixpkgs> {}}: {
+{
+  pkgs ? import <nixpkgs> {},
+  languages,
+}: {
   go = pkgs.mkShell {
-    packages = with pkgs; [
-      go
-      gopls
-    ];
+    inherit (languages.go) packages;
   };
   go_1_17 = pkgs.mkShell {
     packages = with pkgs; [

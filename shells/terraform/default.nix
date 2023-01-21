@@ -1,9 +1,8 @@
-{pkgs ? import <nixpkgs> {}}: {
+{
+  pkgs ? import <nixpkgs> {},
+  languages,
+}: {
   terraform = pkgs.mkShell {
-    packages = with pkgs; [
-      terraform
-      terraform-ls
-      tflint
-    ];
+    inherit (languages.terraform) packages;
   };
 }

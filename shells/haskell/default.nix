@@ -1,9 +1,8 @@
-{pkgs ? import <nixpkgs> {}}: {
+{
+  pkgs ? import <nixpkgs> {},
+  languages,
+}: {
   haskell = pkgs.mkShell {
-    packages = with pkgs; [
-      ghcid
-      haskell-language-server
-      ormolu
-    ];
+    inherit (languages.haskell) packages;
   };
 }
