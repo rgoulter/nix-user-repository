@@ -3,6 +3,7 @@
   cloud-interactive = import ./cloud-interactive.nix;
   desktop = import ./desktop.nix;
   keyboards = import ./keyboards.nix;
+  languages = import ./languages.nix;
   printing = import ./printing.nix;
   specialisations = import ./specialisations.nix;
   ssh = import ./ssh.nix;
