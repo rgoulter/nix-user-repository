@@ -75,6 +75,14 @@
       };
     };
 
+    lib = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      fenix-pkgs = fenix.packages.${system};
+    in
+      import ./lib {
+        inherit pkgs fenix-pkgs;
+      });
+
     nixosModules = import ./modules;
 
     packages = forAllSystems (
