@@ -88,6 +88,7 @@
         sha256 = "sha256-FK01QQuXkFXuy/W7wzAA0G+T2s9dQIDBjMxMC0cUk2M=";
       };
   in {
+    inherit toolchain;
     environment = {
       LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contract
