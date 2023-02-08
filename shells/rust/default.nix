@@ -4,7 +4,7 @@
 }: {
   rust = pkgs.mkShell {
     inherit (languages.rust.environment) RUST_SRC_PATH;
-    nativeBuildInputs = languages.rust.packages;
+    nativeBuildInputs = languages.rust.packages ++ [ pkgs.cmake ];
   };
 
   rust_thumbv7em-none-eabihf = pkgs.mkShell {
