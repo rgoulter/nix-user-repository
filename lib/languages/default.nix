@@ -60,6 +60,27 @@
       pyright
     ];
   };
+  rust = let
+    toolchain = with fenix-pkgs;
+      default.toolchain;
+  in {
+    inherit toolchain;
+    environment = {
+      LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contract
+      PROTOC = "${pkgs.protobuf}/bin/protoc";
+      ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
+      RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
+    };
+    packages = with pkgs; [
+      pkgs.clang
+      pkgs.pkg-config
+      pkgs.rust-analyzer
+      toolchain
+      pkgs.openssl # for cargo-dylint
+      # binaryen # for cargo contracts
+    ];
+  };
   rust_thumbv7em-none-eabihf = let
     target = "thumbv7em-none-eabihf";
     toolchain = with fenix-pkgs;

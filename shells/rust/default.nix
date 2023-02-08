@@ -2,6 +2,11 @@
   pkgs ? import <nixpkgs> {},
   languages,
 }: {
+  rust = pkgs.mkShell {
+    inherit (languages.rust.environment) RUST_SRC_PATH;
+    nativeBuildInputs = languages.rust.packages;
+  };
+
   rust_thumbv7em-none-eabihf = pkgs.mkShell {
     inherit (languages.rust_thumbv7em-none-eabihf.environment) RUST_SRC_PATH;
     nativeBuildInputs = languages.rust_thumbv7em-none-eabihf.packages;
