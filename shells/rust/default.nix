@@ -3,7 +3,14 @@
   languages,
 }: {
   rust = pkgs.mkShell {
-    inherit (languages.rust.environment) RUST_SRC_PATH;
+    inherit
+      (languages.rust.environment)
+      LIBCLANG_PATH
+      PKG_CONFIG_PATH
+      PROTOC
+      ROCKSDB_LIB_DIR
+      RUST_SRC_PATH
+      ;
     nativeBuildInputs = languages.rust.packages ++ [ pkgs.cmake ];
   };
 
