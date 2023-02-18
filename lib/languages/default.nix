@@ -111,11 +111,19 @@
   in {
     inherit toolchain;
     environment = {
+      LD_LIBRARY_PATH = with pkgs;
+        lib.makeLibraryPath [
+          zlib.out
+          bzip2.out
+          lz4.out
+          zstd.out
+        ];
       LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig/"; # for cargo-contract
       PROTOC = "${pkgs.protobuf}/bin/protoc";
       ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
+      SNAPPY_LIB_DIR = "${pkgs.snappy}/lib";
     };
     packages = with pkgs; [
       pkgs.clang

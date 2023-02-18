@@ -11,7 +11,7 @@
       ROCKSDB_LIB_DIR
       RUST_SRC_PATH
       ;
-    nativeBuildInputs = languages.rust.packages ++ [ pkgs.cmake ];
+    nativeBuildInputs = languages.rust.packages ++ [pkgs.cmake];
   };
 
   rust_thumbv7em-none-eabihf = pkgs.mkShell {
@@ -22,11 +22,13 @@
   rust_wasm32-unknown-unknown = pkgs.mkShell {
     inherit
       (languages.rust_wasm32-unknown-unknown.environment)
+      LD_LIBRARY_PATH
       LIBCLANG_PATH
       PKG_CONFIG_PATH
       PROTOC
       ROCKSDB_LIB_DIR
       RUST_SRC_PATH
+      SNAPPY_LIB_DIR
       ;
     buildInputs = languages.rust_wasm32-unknown-unknown.packages;
   };
