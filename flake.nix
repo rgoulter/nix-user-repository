@@ -18,18 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-with-kicad5 = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      rev = "89f196fe781c53cb50fef61d3063fa5e8d61b6e5";
-    };
   };
   outputs = {
     self,
     naersk,
     nixpkgs,
-    nixpkgs-with-kicad5,
     fenix,
     nixos-generators,
     nixos-shell,
@@ -40,11 +33,6 @@
     ];
     forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
   in {
-    apps.x86_64-linux.kicad5 = {
-      type = "app";
-      program = "${self.packages.x86_64-linux.kicad-5_1_12}/bin/kicad";
-    };
-
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
       fenix-pkgs = fenix.packages.${system};
@@ -110,13 +98,6 @@
         // (
           if system == "x86_64-linux"
           then {
-            kicad-5_1_12 = let
-              pkgs-with-kicad5 = import nixpkgs-with-kicad5 {
-                inherit system;
-                # config.allowUnfree = true;
-              };
-            in
-              pkgs-with-kicad5.kicad;
             offline-iso = nixos-generators.nixosGenerate {
               pkgs = nixpkgs.legacyPackages.${system};
               format = "iso";
