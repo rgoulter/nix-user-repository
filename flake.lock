@@ -56,22 +56,6 @@
         "type": "github"
       }
     },
-    "nixos-2105": {
-      "locked": {
-        "lastModified": 1659914493,
-        "narHash": "sha256-lkA5X3VNMKirvA+SUzvEhfA7XquWLci+CGi505YFAIs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-21.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
@@ -149,7 +133,6 @@
       "inputs": {
         "fenix": "fenix",
         "naersk": "naersk",
-        "nixos-2105": "nixos-2105",
         "nixos-generators": "nixos-generators",
         "nixos-shell": "nixos-shell",
         "nixpkgs": "nixpkgs",

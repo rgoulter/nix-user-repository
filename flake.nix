@@ -9,7 +9,6 @@
       url = "github:nix-community/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-2105.url = "github:NixOS/nixpkgs/nixos-21.05";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +29,6 @@
     self,
     naersk,
     nixpkgs,
-    nixos-2105,
     nixpkgs-with-kicad5,
     fenix,
     nixos-generators,
@@ -49,11 +47,9 @@
 
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      nixos-2105-pkgs = nixos-2105.legacyPackages.${system};
       fenix-pkgs = fenix.packages.${system};
     in
       import ./shells {inherit pkgs fenix-pkgs;}
-      // import ./shells/python/old.nix {inherit nixos-2105-pkgs;}
       // {
         default = pkgs.mkShell {
           packages = with pkgs; [
