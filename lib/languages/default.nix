@@ -33,7 +33,8 @@
     packages = with pkgs; [
       alejandra
       nix
-      nix-linter
+      # 2023-02-18: BROKEN
+      # nix-linter
       rnix-lsp
     ];
   };
