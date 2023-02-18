@@ -2,16 +2,6 @@
   pkgs ? import <nixpkgs> {},
   languages,
 }: {
-  python_3_7 = pkgs.mkShell {
-    packages = with pkgs; [
-      libffi
-      python37
-      pyright
-    ];
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.stdenv.cc.cc.lib
-    ];
-  };
   python_3_8 = pkgs.mkShell {
     packages = with pkgs; [
       libffi
