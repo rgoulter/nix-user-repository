@@ -52,8 +52,8 @@
     nixosConfigurations = {
       "offline-iso" = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        config = {allowUnfree = true;};
         modules = [
+          {nixpkgs.config = {allowUnfree = true;};}
           ./modules/installer/offline.nix
           nixos-shell.nixosModules.nixos-shell
         ];
