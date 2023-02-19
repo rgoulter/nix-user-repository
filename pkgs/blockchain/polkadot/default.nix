@@ -13,8 +13,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "paritytech";
       repo = "polkadot";
-      rev = "v0.9.30";
-      sha256 = "sha256-3hmoTTzdvC1s0GsfgEz6vaIh/obx+MHCqjnUJR6NRVk";
+      rev = "v0.9.37";
+      sha256 = "sha256-TTi4cKqQT/2ZZ/acGvcilqTlh2D9t4cfAtQQyVZWdmg";
     };
     buildInputs = language-rust.packages;
   } // language-rust.environment)
