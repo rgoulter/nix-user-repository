@@ -29,8 +29,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "paritytech";
       repo = "polkadot";
-      rev = "v9.30.0";
-      sha256 = "3hmoTTzdvC1s0GsfgEz6vaIh/obx+MHCqjnUJR6NRVk=";
+      rev = "v0.9.30";
+      sha256 = "sha256-3hmoTTzdvC1s0GsfgEz6vaIh/obx+MHCqjnUJR6NRVk";
     };
     buildInputs = [
       pkgs.clang
