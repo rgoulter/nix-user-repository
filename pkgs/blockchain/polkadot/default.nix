@@ -8,13 +8,18 @@
     cargo = language-rust.toolchain;
     rustc = language-rust.toolchain;
   };
+in let
+  name = "polkadot";
+  version = "0.9.37";
 in
   naersk'.buildPackage ({
-    src = pkgs.fetchFromGitHub {
-      owner = "paritytech";
-      repo = "polkadot";
-      rev = "v0.9.37";
-      sha256 = "sha256-TTi4cKqQT/2ZZ/acGvcilqTlh2D9t4cfAtQQyVZWdmg";
-    };
-    buildInputs = language-rust.packages;
-  } // language-rust.environment)
+      inherit name version;
+      src = pkgs.fetchFromGitHub {
+        owner = "paritytech";
+        repo = name;
+        rev = "v${version}";
+        sha256 = "sha256-TTi4cKqQT/2ZZ/acGvcilqTlh2D9t4cfAtQQyVZWdmg";
+      };
+      buildInputs = language-rust.packages;
+    }
+    // language-rust.environment)
