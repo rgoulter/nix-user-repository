@@ -68,7 +68,6 @@ in
         nix
         openssh
         procps
-        python38Packages.powerline
         # Python 3 needed for Tmux extracto
         python3
         ripgrep
