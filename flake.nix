@@ -47,6 +47,18 @@
             treefmt
           ];
         };
+        tslab-deps = let
+          # required to install tslab on macOS
+          zeromq-deps = [
+            pkgs.cmake
+            pkgs.pkgconfig
+            pkgs.zeromq
+            pkgs.libsodium # macos
+          ];
+        in
+          pkgs.mkShell {
+            packages = zeromq-deps;
+          };
       });
 
     nixosConfigurations = {
