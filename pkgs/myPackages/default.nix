@@ -6,10 +6,6 @@
     profileName = "doom";
     displayName = "Doom";
   };
-  emacsWithProfileSpacemacsApplication = makeEmacsChemacsProfile {
-    profileName = "spacemacs";
-    displayName = "Spacemacs";
-  };
   # h/t https://nixos.org/manual/nixpkgs/stable/#sec-gnu-info-setup
   myProfile = pkgs.writeText "my-profile" ''
     export PATH=$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -45,7 +41,6 @@ in
         ]))
         emacs-all-the-icons-fonts
         emacsWithProfileDoomApplication
-        emacsWithProfileSpacemacsApplication
         exa
         fd
         findutils
