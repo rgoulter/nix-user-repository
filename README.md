@@ -19,9 +19,6 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
   - `myPackages` env with packages I like on my desktop.
   - `devops-env-c` packages I like using for devops.
 
-- Apps
-  - Kicad (`kicad5`)
-
 ## Using NixOS Modules in a NixOS Configuration
 
 A `flake.nix` making use of the NixOS modules might look like:
