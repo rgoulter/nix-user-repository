@@ -87,3 +87,26 @@ If using [specialisations](https://nixos.wiki/wiki/Specialisation) (e.g. the
 /nix/var/nix/profiles/system/specialisation/gnome/bin/switch-to-configuration switch
 ```
 
+## Running the 'Offline' NixOS Configuration in a VM
+
+The intended use is to build the iso using
+
+``` sh
+nix build .#offline-iso
+```
+
+and then copying this ISO to thumbdrive. (e.g. to [Ventoy](https://www.ventoy.net/en/index.html)).
+
+For faster iteration, it's also possible to use [nixos-shell](https://github.com/Mic92/nixos-shell/)
+
+``` sh
+nix run nixpkgs#nixos-shell -- --flake .#offline
+```
+
+or just directly run a qemu VM:
+
+``` sh
+nix run .#offline-vm
+```
+
+(take care to remove the `.qcow2` file when changing the `offline.nix` nixos module, though).
