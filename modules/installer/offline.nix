@@ -11,6 +11,10 @@
     "gpg-quick-generate-master-key"
     (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
 in {
+  # bug: 2023-09-22: man-cache generation fails if programs.fish.enable = true;
+  documentation.man.generateCaches = false;
+
+  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
   environment.systemPackages = with pkgs; [
     bash
     firefox
@@ -34,7 +38,21 @@ in {
     yubikey-personalization-gui
   ];
 
+  programs = {
+    fish.enable = true;
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "tty";
+    };
+
+    starship.enable = true;
+  };
+
   services = {
+    gnome.core-utilities.enable = false;
+
     # 2022-06-19: the check fails, for some reason
     logrotate.checkConfig = false;
 
@@ -63,6 +81,8 @@ in {
 
       enable = true;
 
+      excludePackages = [ pkgs.xterm ];
+
       videoDrivers = ["nvidia"];
 
       layout = "us";
@@ -75,7 +95,7 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.11";
 
   time.timeZone = "Asia/Jakarta";
 
@@ -86,6 +106,7 @@ in {
       "wheel"
     ];
     password = "nixos";
+    shell = pkgs.fish;
     uid = 1000;
   };
 }
