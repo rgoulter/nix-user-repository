@@ -42,7 +42,7 @@ in
         ]))
         emacs-all-the-icons-fonts
         emacsWithProfileDoomApplication
-        exa
+        eza
         fd
         findutils
         fish
