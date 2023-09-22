@@ -66,8 +66,7 @@
         system = "x86_64-linux";
         modules = [
           {nixpkgs.config = {allowUnfree = true;};}
-          ./modules/installer/offline.nix
-          nixos-shell.nixosModules.nixos-shell
+          self.nixosModules.offline
         ];
       };
     };
@@ -121,7 +120,7 @@
           };
           format = "iso";
           modules = [
-            ./modules/installer/offline.nix
+            self.nixosModules.offline
           ];
         };
       };
