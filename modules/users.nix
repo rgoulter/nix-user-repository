@@ -11,6 +11,7 @@
     isNormalUser = true;
     extraGroups = [
       "audio"
+      "camera"
       "docker"
       "libvirtd"
       "networkmanager"

@@ -1,6 +1,7 @@
 {
   bluetooth-headset = import ./bluetooth-headset.nix;
   cloud-interactive = import ./cloud-interactive.nix;
+  camera = import ./camera.nix;
   desktop = import ./desktop.nix;
   keyboards = import ./keyboards.nix;
   languages = import ./languages.nix;
