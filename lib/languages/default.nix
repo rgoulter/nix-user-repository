@@ -99,6 +99,7 @@
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
     packages = with pkgs; [
+      pkgs.cargo-binutils
       pkgs.rust-analyzer
       toolchain
     ];
