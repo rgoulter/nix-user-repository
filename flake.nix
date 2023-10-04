@@ -81,7 +81,7 @@
 
     nixosModules = import ./modules;
 
-    packages = (forAllSystems (
+    packages = forAllSystems (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
         pkgsUnfree = import nixpkgs {
@@ -110,20 +110,24 @@
             pkgs = pkgsUnfree;
           };
         }
-    )) // {
-      "x86_64-linux" = {
-        offline-vm = self.nixosConfigurations."offline-iso".config.system.build.vm;
-        offline-iso = nixos-generators.nixosGenerate {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config = {allowUnfree = true;};
-          };
-          format = "iso";
-          modules = [
-            self.nixosModules.offline
-          ];
-        };
-      };
-    };
+        // (
+          if system == "x86_64-linux"
+          then {
+            offline-iso-vm = self.nixosConfigurations."offline-iso".config.system.build.vm;
+            offline-iso = nixos-generators.nixosGenerate {
+              pkgs = import nixpkgs {
+                inherit system;
+                config = {allowUnfree = true;};
+              };
+              format = "iso";
+              modules = [
+                ./modules/installer/offline.nix
+                self.nixosModules.offline
+              ];
+            };
+          }
+          else {}
+        )
+    );
   };
 }
