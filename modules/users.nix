@@ -12,6 +12,7 @@
     extraGroups = [
       "audio"
       "camera"
+      "dialout"
       "docker"
       "libvirtd"
       "networkmanager"
