@@ -96,6 +96,7 @@
   in {
     inherit toolchain;
     environment = {
+      RUSTC="${toolchain}/bin/rustc";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
     packages = with pkgs; [

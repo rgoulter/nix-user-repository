@@ -15,7 +15,7 @@
   };
 
   rust_thumbv7em-none-eabihf = pkgs.mkShell {
-    inherit (languages.rust_thumbv7em-none-eabihf.environment) RUST_SRC_PATH;
+    inherit (languages.rust_thumbv7em-none-eabihf.environment) RUSTC RUST_SRC_PATH;
     nativeBuildInputs = languages.rust_thumbv7em-none-eabihf.packages;
   };
 
