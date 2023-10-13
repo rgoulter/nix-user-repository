@@ -58,19 +58,24 @@ in
         kubectl
         lazydocker
         lazygit
+        ledger
         less
+        # required for GitHub's CoPilot.vim
+        nodejs
         neovim
         nix
         openssh
         procps
         # Python 3 needed for Tmux extracto
         python3
+        rclone
         ripgrep
         # ruby needed for tmux-jump
         ruby
         starship
         tldr
         tmux
+        tmuxPlugins.tmux-thumbs
         wget
         which
       ]
@@ -106,10 +111,15 @@ in
             enableTridactylNative = true;
           };
         })
+        freecad
         # Unfree software; requires config.allowUnfree = true
         google-chrome
+        gimp
+        inkscape
         keepassxc
-        onedrive
+        kicad
+        openscad
+        photoqt
         pinentry-gtk2
         # qmk: works on macOS, too,
         # but my macOS is not very powerful
