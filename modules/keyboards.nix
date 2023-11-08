@@ -11,5 +11,13 @@
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [
     pkgs.stlink
+    (pkgs.writeTextFile {
+      name = "wch.rules";
+      destination = "/lib/udev/rules.d/50-wch.rules";
+      text = ''
+        # Allow wchisp to be used without sudo.
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="4348", ATTRS{idProduct}=="55e0", TAG+="uaccess"
+      '';
+    })
   ];
 }
