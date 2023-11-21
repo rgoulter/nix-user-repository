@@ -82,6 +82,30 @@
       # binaryen # for cargo contracts
     ];
   };
+  rust_thumbv7em-none-eabihf_stable = let
+    target = "thumbv7em-none-eabihf";
+    toolchain = with fenix-pkgs;
+      combine [
+        stable.llvm-tools-preview
+        stable.rust-src
+        stable.rustfmt
+        stable.cargo
+        stable.rustc
+        targets.${target}.stable.rust-std
+      ];
+      # targets.${target}.stable;
+  in {
+    inherit toolchain;
+    environment = {
+      RUSTC="${toolchain}/bin/rustc";
+      RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
+    };
+    packages = with pkgs; [
+      pkgs.cargo-binutils
+      pkgs.rust-analyzer
+      toolchain
+    ];
+  };
   rust_thumbv7em-none-eabihf = let
     target = "thumbv7em-none-eabihf";
     toolchain = with fenix-pkgs;
