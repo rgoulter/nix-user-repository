@@ -107,9 +107,9 @@ in
       ++ (lib.optionals stdenv.isLinux [
         desktop-file-utils
         (firefox.override {
-          cfg = {
-            enableTridactylNative = true;
-          };
+          nativeMessagingHosts = [
+            tridactyl-native
+          ];
         })
         freecad
         # Unfree software; requires config.allowUnfree = true
