@@ -14,7 +14,6 @@
   ];
 
   services = {
-    gnome.core-utilities.enable = false;
     xserver = {
       desktopManager.gnome.enable = lib.mkDefault true;
       displayManager.gdm.enable = lib.mkDefault true;
