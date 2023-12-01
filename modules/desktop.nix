@@ -6,7 +6,7 @@
 }: {
   environment.gnome.excludePackages = [ pkgs.gnome-tour ];
 
-  fonts.packages = with pkgs; [
+  fonts.fonts = with pkgs; [
     noto-fonts
     noto-fonts-extra
     # I like using Source Code Pro with Emacs
