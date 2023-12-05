@@ -22,7 +22,8 @@
       enable = true;
       settings = {
         General = {
-          Enable = "Source,Sink,Media,Socket";
+          Enable = "Control,Gateway,Headset,Media,Sink,Socket,Source";
+          MultiProfile = "multiple";
         };
       };
     };
