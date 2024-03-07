@@ -10,6 +10,7 @@ in
   // import ./haskell {inherit languages pkgs;}
   // import ./nix {inherit languages pkgs;}
   // import ./nodejs {inherit languages pkgs;}
+  // import ./opentofu {inherit languages pkgs;}
   // import ./python {inherit languages pkgs;}
   // import ./rust {inherit languages pkgs;}
   // import ./terraform {inherit languages pkgs;}

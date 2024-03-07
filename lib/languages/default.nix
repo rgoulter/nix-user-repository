@@ -47,6 +47,13 @@
       yarn
     ];
   };
+  opentofu = {
+    packages = with pkgs; [
+      opentofu
+      terraform-ls
+      tflint
+    ];
+  };
   python = {
     # this was set for the `mkShell`
     environment = {
