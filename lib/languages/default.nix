@@ -33,9 +33,6 @@
     packages = with pkgs; [
       alejandra
       nix
-      # 2023-02-18: BROKEN
-      # nix-linter
-      rnix-lsp
     ];
   };
   nodejs = {
