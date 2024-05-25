@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
+  environment.gnome.excludePackages = [pkgs.gnome-tour];
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -20,7 +20,7 @@
 
       enable = true;
 
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
 
       layout = "us";
     };

@@ -114,7 +114,7 @@ in
         freecad
         # Unfree software; requires config.allowUnfree = true
         google-chrome
-        (gimp-with-plugins.override { plugins = with gimpPlugins; [ bimp ]; })
+        (gimp-with-plugins.override {plugins = with gimpPlugins; [bimp];})
         inkscape
         keepassxc
         kicad

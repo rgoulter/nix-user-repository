@@ -97,11 +97,11 @@
         stable.rustc
         targets.${target}.stable.rust-std
       ];
-      # targets.${target}.stable;
+    # targets.${target}.stable;
   in {
     inherit toolchain;
     environment = {
-      RUSTC="${toolchain}/bin/rustc";
+      RUSTC = "${toolchain}/bin/rustc";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
     packages = with pkgs; [
@@ -124,7 +124,7 @@
   in {
     inherit toolchain;
     environment = {
-      RUSTC="${toolchain}/bin/rustc";
+      RUSTC = "${toolchain}/bin/rustc";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
     packages = with pkgs; [

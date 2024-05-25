@@ -14,7 +14,7 @@ in {
   # bug: 2023-09-22: man-cache generation fails if programs.fish.enable = true;
   documentation.man.generateCaches = false;
 
-  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
+  environment.gnome.excludePackages = [pkgs.gnome-tour];
   environment.systemPackages = with pkgs; [
     bash
     firefox
@@ -81,7 +81,7 @@ in {
 
       enable = true;
 
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
 
       videoDrivers = ["nvidia"];
 
