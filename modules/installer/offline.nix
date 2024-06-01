@@ -85,7 +85,7 @@ in {
 
       videoDrivers = ["nvidia"];
 
-      layout = "us";
+      xkb.layout = "us";
     };
   };
 

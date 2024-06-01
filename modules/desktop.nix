@@ -22,7 +22,7 @@
 
       excludePackages = [pkgs.xterm];
 
-      layout = "us";
+      xkb.layout = "us";
     };
   };
 }
