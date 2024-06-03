@@ -30,7 +30,6 @@ in {
     openssl
     paperkey
     pinentry-gtk2
-    pinentry-gnome
     qrencode
     yubico-piv-tool
     yubikey-manager
