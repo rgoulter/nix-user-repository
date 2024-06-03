@@ -78,7 +78,6 @@ in
       ++ (lib.optionals true [
         ])
       ++ (lib.optionals stdenv.isDarwin [
-        pinentry
         pinentry_mac
       ])
       ++ (lib.optionals stdenv.isLinux [
