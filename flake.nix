@@ -104,7 +104,6 @@
         // (
           if system == "x86_64-linux"
           then {
-            offline-iso-vm = self.nixosConfigurations."offline-iso".config.system.build.vm;
             offline-iso = nixos-generators.nixosGenerate {
               pkgs = import nixpkgs {
                 inherit system;
