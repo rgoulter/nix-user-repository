@@ -44,7 +44,6 @@ in {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "tty";
     };
 
     starship.enable = true;
