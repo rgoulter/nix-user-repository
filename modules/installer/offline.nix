@@ -49,6 +49,10 @@ in {
   };
 
   services = {
+    displayManager.autoLogin = {
+      enable = true;
+      user = "nixos";
+    };
     gnome.core-utilities.enable = false;
 
     # 2022-06-19: the check fails, for some reason
@@ -69,13 +73,7 @@ in {
     xserver = {
       # Enable the GNOME 3 Desktop Environment.
       desktopManager.gnome.enable = true;
-      displayManager = {
-        gdm.enable = true;
-        autoLogin = {
-          enable = true;
-          user = "nixos";
-        };
-      };
+      displayManager.gdm.enable = true;
 
       enable = true;
 
