@@ -122,7 +122,6 @@
               };
               format = "iso";
               modules = [
-                ./modules/installer/offline.nix
                 self.nixosModules.offline
               ];
             };
