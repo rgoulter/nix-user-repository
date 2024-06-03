@@ -167,7 +167,7 @@
   };
   terraform = {
     packages = with pkgs; [
-      terraform
+      opentofu
       terraform-ls
       tflint
     ];
