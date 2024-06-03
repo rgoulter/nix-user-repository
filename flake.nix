@@ -52,7 +52,7 @@
           # required to install tslab on macOS
           zeromq-deps = [
             pkgs.cmake
-            pkgs.pkgconfig
+            pkgs.pkg-config
             pkgs.zeromq
             pkgs.libsodium # macos
           ];
