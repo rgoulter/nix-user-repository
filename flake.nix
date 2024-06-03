@@ -62,16 +62,6 @@
           };
       });
 
-    nixosConfigurations = {
-      "offline-iso" = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {nixpkgs.config = {allowUnfree = true;};}
-          self.nixosModules.offline
-        ];
-      };
-    };
-
     lib = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
       fenix-pkgs = fenix.packages.${system};
