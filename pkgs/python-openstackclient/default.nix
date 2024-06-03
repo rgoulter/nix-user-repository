@@ -1,6 +1,6 @@
 {
   lib,
-  python38,
+  python3,
 }:
 with lib; let
   os-service-types = ps: ps.callPackage ../python-packages/os-service-types {};
@@ -56,6 +56,6 @@ with lib; let
       (python-cinderclient python-packages)
       (python-openstackclient python-packages)
     ];
-  python-with-my-packages = python38.withPackages my-python-packages;
+  python-with-my-packages = python3.withPackages my-python-packages;
 in
   python-with-my-packages.pkgs.python-openstackclient
