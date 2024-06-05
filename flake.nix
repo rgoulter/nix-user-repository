@@ -1,6 +1,10 @@
 {
   description = "My personal NUR repository";
   inputs = {
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,8 +28,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = {
+  outputs = inputs @ {
     self,
+    devenv,
     naersk,
     nixpkgs,
     fenix,
@@ -48,12 +53,11 @@
     in
       import ./shells {inherit pkgs fenix-pkgs;}
       // {
-        default = pkgs.mkShell {
-          packages = with pkgs; [
-            alejandra
-            shellcheck
-            shfmt
-            treefmt
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+
+          modules = [
+            (import ./devenv.nix)
           ];
         };
         tslab-deps = let
