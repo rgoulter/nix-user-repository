@@ -42,8 +42,6 @@
     treefmt-nix,
     ...
   }: let
-    forAllSystems = f: nixpkgs.lib.genAttrs (import systems) (system: f system);
-    treefmtEval = forAllSystems (system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix);
     flake = {
       nixosModules = import ./modules;
 
@@ -64,16 +62,16 @@
 
       systems = import systems;
 
+      imports = [
+        treefmt-nix.flakeModule
+      ];
+
       perSystem = {
         config,
         pkgs,
         system,
         ...
       }: {
-        checks = {
-          formatting = treefmtEval.${system}.config.build.check self;
-        };
-
         devShells = let
           fenix-pkgs = fenix.packages.${system};
         in
@@ -99,8 +97,6 @@
                 packages = zeromq-deps;
               };
           };
-
-        formatter = treefmtEval.${system}.config.build.wrapper;
 
         packages = let
           pkgsUnfree = import nixpkgs {
@@ -129,6 +125,8 @@
               pkgs = pkgsUnfree;
             };
           };
+
+        treefmt = import ./treefmt.nix;
       };
     };
 }
