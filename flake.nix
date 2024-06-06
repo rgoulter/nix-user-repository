@@ -9,6 +9,7 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
     naersk = {
       url = "github:nix-community/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +32,7 @@
   outputs = inputs @ {
     self,
     devenv,
+    flake-parts,
     naersk,
     nixpkgs,
     fenix,
@@ -42,95 +44,101 @@
   }: let
     forAllSystems = f: nixpkgs.lib.genAttrs (import systems) (system: f system);
     treefmtEval = forAllSystems (system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix);
-  in {
-    checks = forAllSystems (system: {
-      formatting = treefmtEval.${system}.config.build.check self;
-    });
-
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      fenix-pkgs = fenix.packages.${system};
-    in
-      import ./shells {inherit pkgs fenix-pkgs;}
-      // {
-        default = devenv.lib.mkShell {
-          inherit inputs pkgs;
-
-          modules = [
-            (import ./devenv.nix)
-          ];
-        };
-        tslab-deps = let
-          # required to install tslab on macOS
-          zeromq-deps = [
-            pkgs.cmake
-            pkgs.pkg-config
-            pkgs.zeromq
-            pkgs.libsodium # macos
-          ];
-        in
-          pkgs.mkShell {
-            packages = zeromq-deps;
-          };
+    flake = {
+      checks = forAllSystems (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
       });
 
-    formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
-
-    lib = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      fenix-pkgs = fenix.packages.${system};
-    in
-      import ./lib {
-        inherit pkgs fenix-pkgs;
-      });
-
-    nixosModules = import ./modules;
-
-    packages = forAllSystems (
-      system: let
+      devShells = forAllSystems (system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        pkgsUnfree = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        fenix-pkgs = fenix.packages.${system};
       in
-        import ./pkgs {inherit pkgs;}
-        // (import ./pkgs/blockchain {
-          inherit pkgs naersk;
-          languages = import ./lib/languages {
-            inherit pkgs;
-            fenix-pkgs = fenix.packages.${system};
-          };
-        })
+        import ./shells {inherit pkgs fenix-pkgs;}
         // {
-          devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-          myPackages = import ./pkgs/myPackages {
-            makeEmacsChemacsProfile =
-              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-            pkgs = pkgsUnfree;
+          default = devenv.lib.mkShell {
+            inherit inputs pkgs;
+
+            modules = [
+              (import ./devenv.nix)
+            ];
           };
-          myPackages-lite = import ./pkgs/myPackages/lite.nix {
-            makeEmacsChemacsProfile =
-              pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-            pkgs = pkgsUnfree;
+          tslab-deps = let
+            # required to install tslab on macOS
+            zeromq-deps = [
+              pkgs.cmake
+              pkgs.pkg-config
+              pkgs.zeromq
+              pkgs.libsodium # macos
+            ];
+          in
+            pkgs.mkShell {
+              packages = zeromq-deps;
+            };
+        });
+
+      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
+
+      lib = forAllSystems (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        fenix-pkgs = fenix.packages.${system};
+      in
+        import ./lib {
+          inherit pkgs fenix-pkgs;
+        });
+
+      nixosModules = import ./modules;
+
+      packages = forAllSystems (
+        system: let
+          pkgs = nixpkgs.legacyPackages.${system};
+          pkgsUnfree = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
-        }
-        // (
-          if system == "x86_64-linux"
-          then {
-            offline-iso = nixos-generators.nixosGenerate {
-              pkgs = import nixpkgs {
-                inherit system;
-                config = {allowUnfree = true;};
-              };
-              format = "iso";
-              modules = [
-                self.nixosModules.offline
-              ];
+        in
+          import ./pkgs {inherit pkgs;}
+          // (import ./pkgs/blockchain {
+            inherit pkgs naersk;
+            languages = import ./lib/languages {
+              inherit pkgs;
+              fenix-pkgs = fenix.packages.${system};
+            };
+          })
+          // {
+            devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
+            myPackages = import ./pkgs/myPackages {
+              makeEmacsChemacsProfile =
+                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+              pkgs = pkgsUnfree;
+            };
+            myPackages-lite = import ./pkgs/myPackages/lite.nix {
+              makeEmacsChemacsProfile =
+                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+              pkgs = pkgsUnfree;
             };
           }
-          else {}
-        )
-    );
-  };
+          // (
+            if system == "x86_64-linux"
+            then {
+              offline-iso = nixos-generators.nixosGenerate {
+                pkgs = import nixpkgs {
+                  inherit system;
+                  config = {allowUnfree = true;};
+                };
+                format = "iso";
+                modules = [
+                  self.nixosModules.offline
+                ];
+              };
+            }
+            else {}
+          )
+      );
+    };
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      inherit flake;
+
+      systems = import systems;
+    };
 }
