@@ -45,52 +45,64 @@
     forAllSystems = f: nixpkgs.lib.genAttrs (import systems) (system: f system);
     treefmtEval = forAllSystems (system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix);
     flake = {
-      checks = forAllSystems (system: {
-        formatting = treefmtEval.${system}.config.build.check self;
-      });
-
-      devShells = forAllSystems (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        fenix-pkgs = fenix.packages.${system};
-      in
-        import ./shells {inherit pkgs fenix-pkgs;}
-        // {
-          default = devenv.lib.mkShell {
-            inherit inputs pkgs;
-
-            modules = [
-              (import ./devenv.nix)
-            ];
-          };
-          tslab-deps = let
-            # required to install tslab on macOS
-            zeromq-deps = [
-              pkgs.cmake
-              pkgs.pkg-config
-              pkgs.zeromq
-              pkgs.libsodium # macos
-            ];
-          in
-            pkgs.mkShell {
-              packages = zeromq-deps;
-            };
-        });
-
-      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
-
-      lib = forAllSystems (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        fenix-pkgs = fenix.packages.${system};
-      in
-        import ./lib {
-          inherit pkgs fenix-pkgs;
-        });
-
       nixosModules = import ./modules;
 
-      packages = forAllSystems (
-        system: let
-          pkgs = nixpkgs.legacyPackages.${system};
+      packages.x86_64-linux.offline-iso = nixos-generators.nixosGenerate {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config = {allowUnfree = true;};
+        };
+        format = "iso";
+        modules = [
+          self.nixosModules.offline
+        ];
+      };
+    };
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      inherit flake;
+
+      systems = import systems;
+
+      perSystem = {
+        config,
+        pkgs,
+        system,
+        ...
+      }: {
+        checks = {
+          formatting = treefmtEval.${system}.config.build.check self;
+        };
+
+        devShells = let
+          fenix-pkgs = fenix.packages.${system};
+        in
+          import ./shells {inherit pkgs fenix-pkgs;}
+          // {
+            default = devenv.lib.mkShell {
+              inherit inputs pkgs;
+
+              modules = [
+                (import ./devenv.nix)
+              ];
+            };
+            tslab-deps = let
+              # required to install tslab on macOS
+              zeromq-deps = [
+                pkgs.cmake
+                pkgs.pkg-config
+                pkgs.zeromq
+                pkgs.libsodium # macos
+              ];
+            in
+              pkgs.mkShell {
+                packages = zeromq-deps;
+              };
+          };
+
+        formatter = treefmtEval.${system}.config.build.wrapper;
+
+        packages = let
           pkgsUnfree = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
@@ -116,29 +128,7 @@
                 pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
               pkgs = pkgsUnfree;
             };
-          }
-          // (
-            if system == "x86_64-linux"
-            then {
-              offline-iso = nixos-generators.nixosGenerate {
-                pkgs = import nixpkgs {
-                  inherit system;
-                  config = {allowUnfree = true;};
-                };
-                format = "iso";
-                modules = [
-                  self.nixosModules.offline
-                ];
-              };
-            }
-            else {}
-          )
-      );
-    };
-  in
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      inherit flake;
-
-      systems = import systems;
+          };
+      };
     };
 }
