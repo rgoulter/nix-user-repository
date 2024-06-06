@@ -1,6 +1,10 @@
 {
   description = "My personal NUR repository";
   inputs = {
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
     devenv = {
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +35,7 @@
   };
   outputs = inputs @ {
     self,
+    devenv-root,
     devenv,
     flake-parts,
     naersk,
@@ -63,6 +68,7 @@
       systems = import systems;
 
       imports = [
+        devenv.flakeModule
         treefmt-nix.flakeModule
       ];
 
@@ -72,18 +78,23 @@
         system,
         ...
       }: {
+        devenv.shells.default = {pkgs, ...}: {
+          devenv.root = let
+            devenvRootFileContent = builtins.readFile devenv-root.outPath;
+          in
+            pkgs.lib.mkIf (devenvRootFileContent != "") devenvRootFileContent;
+
+          # https://github.com/cachix/devenv/issues/528
+          containers = pkgs.lib.mkForce {};
+
+          imports = [./devenv.nix];
+        };
+
         devShells = let
           fenix-pkgs = fenix.packages.${system};
         in
           import ./shells {inherit pkgs fenix-pkgs;}
           // {
-            default = devenv.lib.mkShell {
-              inherit inputs pkgs;
-
-              modules = [
-                (import ./devenv.nix)
-              ];
-            };
             tslab-deps = let
               # required to install tslab on macOS
               zeromq-deps = [
