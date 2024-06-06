@@ -46,31 +46,29 @@
     systems,
     treefmt-nix,
     ...
-  }: let
-    flake = {
-      nixosModules = import ./modules;
-
-      packages.x86_64-linux.offline-iso = nixos-generators.nixosGenerate {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          config = {allowUnfree = true;};
-        };
-        format = "iso";
-        modules = [
-          self.nixosModules.offline
-        ];
-      };
-    };
-  in
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      inherit flake;
-
       systems = import systems;
 
       imports = [
         devenv.flakeModule
         treefmt-nix.flakeModule
       ];
+
+      flake = {
+        nixosModules = import ./modules;
+
+        packages.x86_64-linux.offline-iso = nixos-generators.nixosGenerate {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config = {allowUnfree = true;};
+          };
+          format = "iso";
+          modules = [
+            self.nixosModules.offline
+          ];
+        };
+      };
 
       perSystem = {
         config,
