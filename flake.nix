@@ -87,6 +87,8 @@
           # https://github.com/cachix/devenv/issues/528
           containers = pkgs.lib.mkForce {};
 
+          programs.treefmt.package = config.treefmt.build.wrapper;
+
           imports = [./devenv.nix];
         };
 
