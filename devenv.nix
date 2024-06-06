@@ -1,14 +1,25 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: {
-  packages = with pkgs; [
-    treefmt
-  ];
+  options = {
+    programs.treefmt = {
+      package = lib.mkOption {
+        defaultText = lib.literalMD "package for running `treefmt` in devshell";
+      };
+    };
+  };
 
-  languages = {
-    nix.enable = true;
-    shell.enable = true;
+  config = {
+    packages = with pkgs; [
+      config.programs.treefmt.package
+    ];
+
+    languages = {
+      nix.enable = true;
+      shell.enable = true;
+    };
   };
 }
