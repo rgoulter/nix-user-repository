@@ -1,9 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
   specialisation = {
     gnome.configuration = {
       services.xserver = {
