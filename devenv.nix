@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -13,7 +12,7 @@
   };
 
   config = {
-    packages = with pkgs; [
+    packages = [
       config.programs.treefmt.package
     ];
 

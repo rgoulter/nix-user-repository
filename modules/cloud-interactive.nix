@@ -2,8 +2,6 @@
 # I want nice-to-have things like
 # a better shell (fish), a better editor (helix),
 {
-  config,
-  lib,
   pkgs,
   ...
 }: {

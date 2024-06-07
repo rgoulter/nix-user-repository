@@ -77,7 +77,7 @@
       ROCKSDB_LIB_DIR = "${pkgs.rocksdb}/lib";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
     };
-    packages = with pkgs; [
+    packages = [
       pkgs.clang
       pkgs.pkg-config
       pkgs.rust-analyzer
@@ -104,7 +104,7 @@
       RUSTC = "${toolchain}/bin/rustc";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
-    packages = with pkgs; [
+    packages = [
       pkgs.cargo-binutils
       pkgs.rust-analyzer
       toolchain
@@ -127,7 +127,7 @@
       RUSTC = "${toolchain}/bin/rustc";
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src";
     };
-    packages = with pkgs; [
+    packages = [
       pkgs.cargo-binutils
       pkgs.rust-analyzer
       toolchain
@@ -156,7 +156,7 @@
       RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library/";
       SNAPPY_LIB_DIR = "${pkgs.snappy}/lib";
     };
-    packages = with pkgs; [
+    packages = [
       pkgs.clang
       pkgs.pkg-config
       pkgs.rust-analyzer

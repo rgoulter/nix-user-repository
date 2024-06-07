@@ -1,9 +1,3 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
 # A user named `rgoulter`,
 # for headless environments.
 {
