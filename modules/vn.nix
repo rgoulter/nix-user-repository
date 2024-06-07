@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{pkgs, ...}:
 # Enable Vietnamese IME.
 {
   environment.variables = {

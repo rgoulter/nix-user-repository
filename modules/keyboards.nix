@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{pkgs, ...}:
 # Enable udev rules which allow flashing QMK-powered
 # keyboards, # and using stlink (to flash STM MCUs)
 # without sudo.

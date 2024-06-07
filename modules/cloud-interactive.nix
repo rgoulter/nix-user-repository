@@ -1,10 +1,7 @@
 # for interactive usage of cloud VMs,
 # I want nice-to-have things like
 # a better shell (fish), a better editor (helix),
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     direnv
     fd

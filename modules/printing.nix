@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{pkgs, ...}:
 # Brother laser printer
 {
   services.printing = {
