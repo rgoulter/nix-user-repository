@@ -4,13 +4,13 @@
   makeDarwinBundle,
   makeDesktopItem,
   runCommand,
-  writeScriptBin,
+  writeShellScriptBin,
 }: {
   profileName,
   displayName,
 }: let
   scriptName = "emacs-with-profile-${profileName}";
-  emacsWithProfileScript = writeScriptBin scriptName ''
+  emacsWithProfileScript = writeShellScriptBin scriptName ''
     ${emacs}/bin/emacs --with-profile ${profileName} $*
   '';
   emacsDesktop = makeDesktopItem {
