@@ -11,10 +11,10 @@
       destination = "/lib/udev/rules.d/50-wch.rules";
       text = ''
         # Allow wchisp to be used without sudo.
-        SUBSYSTEMS=="usb", ATTRS{idVendor}=="4348", ATTRS{idProduct}=="55e0", TAG+="uaccess", GROUP="plugdev"
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="4348", ATTRS{idProduct}=="55e0", MODE="660", GROUP="plugdev", TAG+="uaccess"
 
         # Allow WCH-Link to be used without sudo.
-        SUBSYSTEM=="usb", ATTR{idVendor}="1a86", ATTR{idProduct}=="8010", TAG+="uaccess", GROUP="plugdev"
+        SUBSYSTEM=="usb", ATTR{idVendor}="1a86", ATTR{idProduct}=="8010", MODE="660", GROUP="plugdev", TAG+="uaccess"
       '';
     })
   ];
