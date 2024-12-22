@@ -116,13 +116,6 @@
           };
         in
           import ./pkgs {inherit pkgs;}
-          // (import ./pkgs/blockchain {
-            inherit pkgs naersk;
-            languages = import ./lib/languages {
-              inherit pkgs;
-              fenix-pkgs = fenix.packages.${system};
-            };
-          })
           // {
             devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
             myPackages = import ./pkgs/myPackages {
