@@ -63,7 +63,6 @@ e.g. where `hardware-desktop.nix` may be something like:
       nixos-hardware.nixosModules.common-gpu-nvidia
       nixos-hardware.nixosModules.common-pc
       nixos-hardware.nixosModules.common-pc-ssd
-      nixos-hardware.nixosModules.common-pc-hdd
     ];
 }
 ```
