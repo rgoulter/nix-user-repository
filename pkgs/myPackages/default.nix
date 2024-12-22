@@ -128,7 +128,6 @@ in
         # Unfree software; requires config.allowUnfree = true
         spotify
         tdesktop
-        thunderbird
         vlc
         # Unfree software; requires config.allowUnfree = true
         vscode
