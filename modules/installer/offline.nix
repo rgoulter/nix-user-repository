@@ -33,6 +33,8 @@ in {
     yubikey-personalization-gui
   ];
 
+  hardware.nvidia.open = false;
+
   programs = {
     fish.enable = true;
 
