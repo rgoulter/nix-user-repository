@@ -23,18 +23,4 @@
     inherit (languages.rust_thumbv7em-none-eabihf.environment) RUSTC RUST_SRC_PATH;
     nativeBuildInputs = languages.rust_thumbv7em-none-eabihf.packages;
   };
-
-  rust_wasm32-unknown-unknown = pkgs.mkShell {
-    inherit
-      (languages.rust_wasm32-unknown-unknown.environment)
-      LD_LIBRARY_PATH
-      LIBCLANG_PATH
-      PKG_CONFIG_PATH
-      PROTOC
-      ROCKSDB_LIB_DIR
-      RUST_SRC_PATH
-      SNAPPY_LIB_DIR
-      ;
-    buildInputs = languages.rust_wasm32-unknown-unknown.packages;
-  };
 }
