@@ -31,10 +31,13 @@ in
         babelfish
         bashInteractive
         bat
+        broot
         bottom
         comma
         coreutils
         ctags
+        delta
+        difftastic
         direnv
         docker
         ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [
@@ -55,11 +58,14 @@ in
         helix
         htop
         jq
+        just
         kitty
         kubectl
         lazydocker
         lazygit
         less
+        mcfly
+        navi
         neovim
         nix
         openssh
@@ -69,11 +75,13 @@ in
         ripgrep
         # ruby needed for tmux-jump
         ruby
+        skim
         starship
         tldr
         tmux
         wget
         which
+        zellij
       ]
       ++ (lib.optionals true [
         ])

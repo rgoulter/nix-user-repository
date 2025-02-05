@@ -31,9 +31,12 @@ in
         bashInteractive
         bat
         bottom
+        broot
         comma
         coreutils
         ctags
+        delta
+        difftastic
         direnv
         docker
         ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [
@@ -54,12 +57,15 @@ in
         helix
         htop
         jq
+        just
         kitty
         kubectl
         lazydocker
         lazygit
         ledger
         less
+        mcfly
+        navi
         # required for GitHub's CoPilot.vim
         nodejs
         neovim
@@ -72,12 +78,14 @@ in
         ripgrep
         # ruby needed for tmux-jump
         ruby
+        skim
         starship
         tldr
         tmux
         tmuxPlugins.tmux-thumbs
         wget
         which
+        zellij
       ]
       ++ (lib.optionals true [
         ])
