@@ -52,6 +52,7 @@ in
         fzf
         gawk
         git
+        git-absorb
         gitAndTools.tig
         glances
         gnupg
@@ -79,6 +80,7 @@ in
         starship
         tldr
         tmux
+        watchexec
         wget
         which
         zellij

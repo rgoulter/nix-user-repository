@@ -51,6 +51,7 @@ in
         fzf
         gawk
         git
+        git-absorb
         gitAndTools.tig
         glances
         gnupg
@@ -83,6 +84,7 @@ in
         tldr
         tmux
         tmuxPlugins.tmux-thumbs
+        watchexec
         wget
         which
         zellij
