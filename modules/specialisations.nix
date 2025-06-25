@@ -1,39 +1,49 @@
 {
   specialisation = {
     gnome.configuration = {
-      services.xserver = {
+      services = {
         desktopManager.gnome.enable = true;
         displayManager.gdm.enable = true;
       };
       system.nixos.tags = ["gnome"];
     };
     pantheon.configuration = {
-      services.xserver = {
+      services = {
         # Pantheon conflicts with gnome
         desktopManager = {
           gnome.enable = false;
-          pantheon.enable = true;
         };
-        # Pantheon requires lightdm
         displayManager = {
           gdm.enable = false;
-          lightdm.enable = true;
+        };
+        xserver = {
+          desktopManager = {
+            pantheon.enable = true;
+          };
+          # Pantheon requires lightdm
+          displayManager = {
+            lightdm.enable = true;
+          };
         };
       };
       system.nixos.tags = ["pantheon"];
     };
     xfce.configuration = {
       networking.networkmanager.enable = true;
-      services.xserver = {
+      services = {
         desktopManager = {
           gnome.enable = false;
-          xfce.enable = true;
         };
         displayManager = {
           gdm.enable = false;
         };
+        xserver = {
+          desktopManager = {
+            xfce.enable = true;
+          };
+        };
       };
-      system.nixos.tags = ["gnome"];
+      system.nixos.tags = ["xfce"];
     };
   };
 }

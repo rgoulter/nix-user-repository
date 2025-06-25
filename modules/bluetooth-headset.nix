@@ -22,7 +22,6 @@
         };
       };
     };
-    pulseaudio.enable = false;
   };
   security = {
     # https://nixos.wiki/wiki/PipeWire
@@ -36,5 +35,6 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+    pulseaudio.enable = false;
   };
 }

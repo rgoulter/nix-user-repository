@@ -13,10 +13,9 @@
   ];
 
   services = {
+    desktopManager.gnome.enable = lib.mkDefault true;
+    displayManager.gdm.enable = lib.mkDefault true;
     xserver = {
-      desktopManager.gnome.enable = lib.mkDefault true;
-      displayManager.gdm.enable = lib.mkDefault true;
-
       enable = true;
 
       excludePackages = [pkgs.xterm];
