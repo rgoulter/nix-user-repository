@@ -1,6 +1,9 @@
+{ pkgs, ... }:
+
 # A user named `rgoulter`,
 # for graphical desktop.
 {
+  # programs.fish.enable = true;
   users.users.rgoulter = {
     isNormalUser = true;
     extraGroups = [
@@ -13,5 +16,7 @@
       "wheel"
       "vboxusers"
     ];
+    # Using fish as default shell breaks GDM.
+    # shell = pkgs.fish;
   };
 }
