@@ -5,8 +5,38 @@
 {
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [
-    pkgs.picotool
     pkgs.stlink
+    # Workaround: picotool's udev is 99-picotool.rules
+    (pkgs.writeTextFile {
+      name = "picotool.rules";
+      destination = "/lib/udev/rules.d/50-picotool.rules";
+      text = ''
+        SUBSYSTEM=="usb", \
+            ATTRS{idVendor}=="2e8a", \
+            ATTRS{idProduct}=="0003", \
+            TAG+="uaccess" \
+            MODE="660", \
+            GROUP="plugdev"
+        SUBSYSTEM=="usb", \
+            ATTRS{idVendor}=="2e8a", \
+            ATTRS{idProduct}=="0009", \
+            TAG+="uaccess" \
+            MODE="660", \
+            GROUP="plugdev"
+        SUBSYSTEM=="usb", \
+            ATTRS{idVendor}=="2e8a", \
+            ATTRS{idProduct}=="000a", \
+            TAG+="uaccess" \
+            MODE="660", \
+            GROUP="plugdev"
+        SUBSYSTEM=="usb", \
+            ATTRS{idVendor}=="2e8a", \
+            ATTRS{idProduct}=="000f", \
+            TAG+="uaccess" \
+            MODE="660", \
+            GROUP="plugdev"
+      '';
+    })
     (pkgs.writeTextFile {
       name = "wch.rules";
       destination = "/lib/udev/rules.d/50-wch.rules";
