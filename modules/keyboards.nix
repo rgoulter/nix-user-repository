@@ -5,6 +5,7 @@
 {
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [
+    pkgs.picotool
     pkgs.stlink
     (pkgs.writeTextFile {
       name = "wch.rules";
