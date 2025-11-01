@@ -42,6 +42,7 @@ in
         docker
         ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [
           epkgs.vterm
+          epkgs.treesit-grammars.with-all-grammars
         ]))
         emacs-all-the-icons-fonts
         emacsWithProfileDoomApplication
