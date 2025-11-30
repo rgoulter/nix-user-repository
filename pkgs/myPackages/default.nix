@@ -71,7 +71,6 @@ in
         # required for GitHub's CoPilot.vim
         nodejs
         neovim
-        nix
         openssh
         procps
         # Python 3 needed for Tmux extracto
