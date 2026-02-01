@@ -10,7 +10,7 @@
   i18n.inputMethod.enable = true;
   i18n.inputMethod.type = "fcitx5";
   i18n.inputMethod.fcitx5.addons = [
-    pkgs.fcitx5-unikey
+    pkgs.qt6Packages.fcitx5-unikey
     pkgs.fcitx5-gtk
   ];
 }
