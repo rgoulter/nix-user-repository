@@ -7,7 +7,6 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-extra
     # I like using Source Code Pro with Emacs
     source-code-pro
   ];
