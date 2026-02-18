@@ -39,11 +39,13 @@ in
         broot
         comma
         coreutils
+        csvkit
         ctags
         delta
         difftastic
         direnv
         docker
+        duckdb
         emacs-all-the-icons-fonts
         emacsWithPackages
         emacsWithProfileDoomApplication
@@ -64,10 +66,12 @@ in
         just
         kitty
         kubectl
+        k9s
         lazydocker
         lazygit
         ledger
         less
+        lnav
         mcfly
         navi
         # required for GitHub's CoPilot.vim
@@ -89,11 +93,14 @@ in
         watchexec
         wget
         which
+        xh
+        yq
         zellij
       ]
       ++ (lib.optionals true [
         ])
       ++ (lib.optionals stdenv.isDarwin [
+        blueutil
         # 2022-02-06: macOS testykchallengeresponsekey is failing
         # 2022-05-10: KeePass needs newer macOS
         # (keepassxc.overrideAttrs (_: { doCheck = false; }))
