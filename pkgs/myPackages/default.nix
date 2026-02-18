@@ -92,6 +92,7 @@ in
         tldr
         tmux
         tmuxPlugins.tmux-thumbs
+        uv
         watchexec
         wget
         which
@@ -104,6 +105,7 @@ in
         ])
       ++ (lib.optionals stdenv.isDarwin [
         blueutil
+        colima
         # 2022-02-06: macOS testykchallengeresponsekey is failing
         # 2022-05-10: KeePass needs newer macOS
         # (keepassxc.overrideAttrs (_: { doCheck = false; }))
