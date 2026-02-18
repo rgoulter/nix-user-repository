@@ -78,6 +78,7 @@ in
         nodejs
         neovim
         openssh
+        pass
         procps
         # Python 3 needed for Tmux extracto
         python3
@@ -87,6 +88,7 @@ in
         ruby
         skim
         starship
+        tio
         tldr
         tmux
         tmuxPlugins.tmux-thumbs
@@ -96,6 +98,7 @@ in
         xh
         yq
         zellij
+        zk
       ]
       ++ (lib.optionals true [
         ])
