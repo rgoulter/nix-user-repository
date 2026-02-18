@@ -1,13 +1,13 @@
 {
   lib,
-  emacs,
   makeDarwinBundle,
   makeDesktopItem,
   runCommand,
   writeShellScriptBin,
 }: {
-  profileName,
+  emacs,
   displayName,
+  profileName,
 }: let
   scriptName = "emacs-with-profile-${profileName}";
   emacsWithProfileScript = writeShellScriptBin scriptName ''

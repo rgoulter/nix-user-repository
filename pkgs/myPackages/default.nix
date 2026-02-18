@@ -2,9 +2,14 @@
   pkgs,
   makeEmacsChemacsProfile,
 }: let
+  emacsWithPackages = ((pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [
+    epkgs.vterm
+    epkgs.treesit-grammars.with-all-grammars
+  ]));
   emacsWithProfileDoomApplication = makeEmacsChemacsProfile {
     profileName = "doom";
     displayName = "Doom";
+    emacs = emacsWithPackages;
   };
   # h/t https://nixos.org/manual/nixpkgs/stable/#sec-gnu-info-setup
   myProfile = pkgs.writeText "my-profile" ''
@@ -39,11 +44,8 @@ in
         difftastic
         direnv
         docker
-        ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [
-          epkgs.vterm
-          epkgs.treesit-grammars.with-all-grammars
-        ]))
         emacs-all-the-icons-fonts
+        emacsWithPackages
         emacsWithProfileDoomApplication
         eza
         fd
