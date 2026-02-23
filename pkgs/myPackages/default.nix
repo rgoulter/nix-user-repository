@@ -57,7 +57,6 @@ in
         gawk
         git
         git-absorb
-        gitAndTools.tig
         glances
         gnupg
         helix
@@ -88,6 +87,7 @@ in
         ruby
         skim
         starship
+        tig
         tio
         tldr
         tmux
