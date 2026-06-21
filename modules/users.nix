@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 # A user named `rgoulter`,
 # for graphical desktop.
 {
