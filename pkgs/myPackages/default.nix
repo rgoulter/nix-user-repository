@@ -2,10 +2,10 @@
   pkgs,
   makeEmacsChemacsProfile,
 }: let
-  emacsWithPackages = ((pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [
+  emacsWithPackages = (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [
     epkgs.vterm
     epkgs.treesit-grammars.with-all-grammars
-  ]));
+  ]);
   emacsWithProfileDoomApplication = makeEmacsChemacsProfile {
     profileName = "doom";
     displayName = "Doom";
