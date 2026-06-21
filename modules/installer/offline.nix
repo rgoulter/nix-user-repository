@@ -29,8 +29,7 @@ in {
     qrencode
     yubico-piv-tool
     yubikey-manager
-    yubikey-manager-qt
-    yubikey-personalization-gui
+    yubioath-flutter
   ];
 
   hardware.nvidia.open = false;
@@ -51,7 +50,7 @@ in {
       enable = true;
       user = "nixos";
     };
-    gnome.core-utilities.enable = false;
+    gnome.core-apps.enable = false;
 
     # 2022-06-19: the check fails, for some reason
     logrotate.checkConfig = false;
@@ -67,12 +66,12 @@ in {
       pkgs.yubikey-personalization
     ];
 
+    # Enable the GNOME 3 Desktop Environment.
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+
     # Enable the X11 windowing system.
     xserver = {
-      # Enable the GNOME 3 Desktop Environment.
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
-
       enable = true;
 
       excludePackages = [pkgs.xterm];
