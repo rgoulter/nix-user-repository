@@ -137,8 +137,8 @@ in
         freecad
         # Unfree software; requires config.allowUnfree = true
         google-chrome
-        (gimp-with-plugins.override {plugins = with gimpPlugins;
-          [
+        (gimp-with-plugins.override {
+          plugins = with gimpPlugins; [
             # 2026-06-21: bimp package broken
             # bimp
           ];
