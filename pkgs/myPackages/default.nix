@@ -38,6 +38,8 @@ in
         bottom
         broot
         comma
+        # Unfree software; requires config.allowUnfree = true
+        copilot-language-server
         coreutils
         csvkit
         ctags
@@ -73,7 +75,7 @@ in
         lnav
         mcfly
         navi
-        # required for GitHub's CoPilot.vim
+        # Node.js for Doom's :lang javascript nodejs-repl
         nodejs
         neovim
         openssh

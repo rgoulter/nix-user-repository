@@ -39,6 +39,8 @@ in
         broot
         bottom
         comma
+        # Unfree software; requires config.allowUnfree = true
+        copilot-language-server
         coreutils
         ctags
         delta
