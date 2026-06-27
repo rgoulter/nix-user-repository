@@ -114,18 +114,20 @@
             inherit system;
             config.allowUnfree = true;
           };
+          makeEmacsChemacsProfile =
+            pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+          myPackages = import ./pkgs/myPackages {
+            inherit makeEmacsChemacsProfile;
+            pkgs = pkgsUnfree;
+          };
         in
           import ./pkgs {inherit pkgs;}
           // {
+            default = myPackages;
             devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-            myPackages = import ./pkgs/myPackages {
-              makeEmacsChemacsProfile =
-                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-              pkgs = pkgsUnfree;
-            };
+            inherit myPackages;
             myPackages-lite = import ./pkgs/myPackages/lite.nix {
-              makeEmacsChemacsProfile =
-                pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
+              inherit makeEmacsChemacsProfile;
               pkgs = pkgsUnfree;
             };
           };
