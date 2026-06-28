@@ -17,6 +17,11 @@
     export MANPATH=$HOME/.nix-profile/share/man:/nix/var/nix/profiles/default/share/man:/usr/share/man
     export INFOPATH=$HOME/.nix-profile/share/info:/nix/var/nix/profiles/default/share/info:/usr/share/info
   '';
+  aspellWithMyDicts = pkgs.aspellWithDicts (d: [
+    d.en
+    d.en-computers
+    d.vi
+  ]);
 in
   pkgs.buildEnv {
     name = "my-packages";
@@ -26,10 +31,7 @@ in
           mkdir -p $out/etc/profile.d
           cp ${myProfile} $out/etc/profile.d/my-profile.sh
         '')
-        aspell
-        aspellDicts.en
-        aspellDicts.en-computers
-        aspellDicts.vi
+        aspellWithMyDicts
         awscli2
         aws-mfa
         babelfish
