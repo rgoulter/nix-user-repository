@@ -116,20 +116,24 @@
           };
           makeEmacsChemacsProfile =
             pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-          myPackages = import ./pkgs/myPackages {
+          workstation = import ./pkgs/workstation {
+            inherit makeEmacsChemacsProfile;
+            pkgs = pkgsUnfree;
+          };
+          workstation-lite = import ./pkgs/workstation/lite.nix {
             inherit makeEmacsChemacsProfile;
             pkgs = pkgsUnfree;
           };
         in
           import ./pkgs {inherit pkgs;}
           // {
-            default = myPackages;
+            default = workstation;
             devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-            inherit myPackages;
-            myPackages-lite = import ./pkgs/myPackages/lite.nix {
-              inherit makeEmacsChemacsProfile;
-              pkgs = pkgsUnfree;
-            };
+            inherit workstation workstation-lite;
+            myPackages = pkgs.lib.warn "myPackages is deprecated; use workstation instead." workstation;
+            myPackages-lite =
+              pkgs.lib.warn "myPackages-lite is deprecated; use workstation-lite instead."
+              workstation-lite;
           };
 
         treefmt = import ./treefmt.nix;

@@ -24,7 +24,7 @@
   ]);
 in
   pkgs.buildEnv {
-    name = "my-packages";
+    name = "workstation";
     paths = with pkgs;
       [
         (runCommand "profile" {} ''

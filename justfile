@@ -6,7 +6,7 @@ devenv-root := "file+file://" + justfile_directory()
 default:
     @just --list
 
-# Build myPackages (same as plain `nix build`)
+# Build workstation (same as plain `nix build`)
 alias b := build
 
 build:

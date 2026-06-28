@@ -25,7 +25,7 @@
   ]);
 in
   pkgs.buildEnv {
-    name = "my-packages";
+    name = "workstation-lite";
     paths = with pkgs;
       [
         (runCommand "profile" {} ''

@@ -16,7 +16,7 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
   - terraform (`terraform`)
 
 - Packages
-  - `myPackages` env with packages I like on my desktop.
+  - `workstation` env with packages I like on my desktop (`myPackages` is a deprecated alias).
   - `devops-env-c` packages I like using for devops.
 
 ## Using NixOS Modules in a NixOS Configuration
