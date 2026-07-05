@@ -5,12 +5,17 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - '*'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check:
+    name: flake check (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
 
     strategy:
       fail-fast: false
@@ -19,13 +24,16 @@ jobs:
           - ubuntu-latest
           - macos-latest
 
+    permissions:
+      contents: read
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Setup Nix
-        uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/determinate-nix-action@v3
 
-      - name: Run Nix Flake Check
-        # devenv needs devenv-root
-        run: nix flake check --override-input devenv-root "file+file://"<(printf %s "$PWD")
+      - uses: DeterminateSystems/flake-checker-action@v12
+
+      - name: Run Nix flake check
+        # devenv needs devenv-root as an absolute path
+        run: nix flake check --override-input devenv-root "file+file://${{ github.workspace }}"
