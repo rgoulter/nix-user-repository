@@ -11,7 +11,7 @@
   bash = {
     packages = with pkgs; [
       bashInteractive
-      nodePackages.bash-language-server
+      bash-language-server
       shellcheck
       shfmt
     ];
@@ -38,9 +38,9 @@
   nodejs = {
     packages = with pkgs; [
       nodejs
-      nodePackages.eslint
-      nodePackages.typescript
-      nodePackages.typescript-language-server
+      eslint
+      typescript
+      typescript-language-server
       yarn
     ];
   };
