@@ -17,9 +17,6 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # TBI: aarch64-macos
-          # - macos-latest
-          - macos-13
 
     steps:
       - name: Checkout code
