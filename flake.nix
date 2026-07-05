@@ -53,6 +53,7 @@
       imports = [
         devenv.flakeModule
         treefmt-nix.flakeModule
+        ./pkgs/flake-module.nix
       ];
 
       flake = {
