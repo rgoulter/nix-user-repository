@@ -14,16 +14,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    naersk = {
-      url = "github:nix-community/naersk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-shell = {
-      url = "github:Mic92/nixos-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -33,111 +25,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs @ {
-    self,
-    devenv-root,
-    devenv,
-    flake-parts,
-    naersk,
-    nixpkgs,
-    fenix,
-    nixos-generators,
-    nixos-shell,
-    systems,
-    treefmt-nix,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = import systems;
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = import inputs.systems;
 
       imports = [
-        devenv.flakeModule
-        treefmt-nix.flakeModule
-        ./pkgs/flake-module.nix
+        inputs.devenv.flakeModule
+        inputs.treefmt-nix.flakeModule
+        ./flake-parts.nix
       ];
-
-      flake = {
-        nixosModules = import ./modules;
-
-        packages.x86_64-linux.offline-iso = nixos-generators.nixosGenerate {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config = {allowUnfree = true;};
-          };
-          format = "iso";
-          modules = [
-            self.nixosModules.offline
-          ];
-        };
-      };
-
-      perSystem = {
-        config,
-        pkgs,
-        system,
-        ...
-      }: {
-        devenv.shells.default = {pkgs, ...}: {
-          devenv.root = let
-            devenvRootFileContent = builtins.readFile devenv-root.outPath;
-          in
-            pkgs.lib.mkIf (devenvRootFileContent != "") devenvRootFileContent;
-
-          # https://github.com/cachix/devenv/issues/528
-          containers = pkgs.lib.mkForce {};
-
-          programs.treefmt.package = config.treefmt.build.wrapper;
-
-          imports = [./devenv.nix];
-        };
-
-        devShells = let
-          fenix-pkgs = fenix.packages.${system};
-        in
-          import ./shells {inherit pkgs fenix-pkgs;}
-          // {
-            tslab-deps = let
-              # required to install tslab on macOS
-              zeromq-deps = [
-                pkgs.cmake
-                pkgs.pkg-config
-                pkgs.zeromq
-                pkgs.libsodium # macos
-              ];
-            in
-              pkgs.mkShell {
-                packages = zeromq-deps;
-              };
-          };
-
-        packages = let
-          pkgsUnfree = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          makeEmacsChemacsProfile =
-            pkgs.callPackage ./lib/make-emacs-chemacs-profile-application.nix {};
-          workstation = import ./pkgs/workstation {
-            inherit makeEmacsChemacsProfile;
-            pkgs = pkgsUnfree;
-          };
-          workstation-lite = import ./pkgs/workstation/lite.nix {
-            inherit makeEmacsChemacsProfile;
-            pkgs = pkgsUnfree;
-          };
-        in
-          import ./pkgs {inherit pkgs;}
-          // {
-            default = workstation;
-            devops-env-c = import ./pkgs/devops-env-c {inherit pkgs;};
-            inherit workstation workstation-lite;
-            myPackages = pkgs.lib.warn "myPackages is deprecated; use workstation instead." workstation;
-            myPackages-lite =
-              pkgs.lib.warn "myPackages-lite is deprecated; use workstation-lite instead."
-              workstation-lite;
-          };
-
-        treefmt = import ./treefmt.nix;
-      };
     };
 }
