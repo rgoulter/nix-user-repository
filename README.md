@@ -18,6 +18,7 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
 - Packages
   - `workstation` env with packages I like on my desktop (`myPackages` is a deprecated alias).
   - `devops-env-c` packages I like using for devops.
+  - `mmdflux` — headless Mermaid → terminal text, SVG, MMDS JSON ([kevinswiber/mmdflux](https://github.com/kevinswiber/mmdflux)).
 
 ## Using NixOS Modules in a NixOS Configuration
 
