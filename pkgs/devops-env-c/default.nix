@@ -26,9 +26,8 @@ pkgs.buildEnv {
     lazygit
     less
     neovim
-    nodePackages.bash-language-server
+    bash-language-server
     ripgrep
-    silver-searcher
     starship
     tmux
     tree
