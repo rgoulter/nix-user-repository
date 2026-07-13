@@ -1,5 +1,0 @@
-[toolchain]
-channel = "nightly-2024-08-16"
-components = ["clippy", "rls", "rustfmt"]
-profile = "minimal"
-targets = ["riscv32imac-unknown-none-elf", "wasm32-unknown-unknown"]

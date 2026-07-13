@@ -24,16 +24,13 @@
       pkgs = pkgsUnfree;
     };
   in {
-    packages =
-      import ./default.nix {inherit pkgs;}
-      // {
-        default = workstation;
-        devops-env-c = import ./devops-env-c {inherit pkgs;};
-        inherit workstation workstation-lite;
-        myPackages = pkgs.lib.warn "myPackages is deprecated; use workstation instead." workstation;
-        myPackages-lite =
-          pkgs.lib.warn "myPackages-lite is deprecated; use workstation-lite instead."
-          workstation-lite;
-      };
+    packages = {
+      default = workstation;
+      inherit workstation workstation-lite;
+      myPackages = pkgs.lib.warn "myPackages is deprecated; use workstation instead." workstation;
+      myPackages-lite =
+        pkgs.lib.warn "myPackages-lite is deprecated; use workstation-lite instead."
+        workstation-lite;
+    };
   };
 }
