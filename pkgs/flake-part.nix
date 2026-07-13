@@ -24,6 +24,7 @@
       pkgs = pkgsUnfree;
     };
   in {
+    checks.workstation = workstation;
     packages =
       import ./default.nix {inherit pkgs;}
       // {
