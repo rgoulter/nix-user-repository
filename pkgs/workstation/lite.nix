@@ -4,6 +4,7 @@
   makeEmacsChemacsProfile,
 }: let
   emacsWithPackages = (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [
+    epkgs.ghostel
     epkgs.treesit-grammars.with-all-grammars
     epkgs.vterm
   ]);
