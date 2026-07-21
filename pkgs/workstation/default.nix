@@ -116,7 +116,8 @@ in
         # (keepassxc.overrideAttrs (_: { doCheck = false; }))
         pinentry_mac
         # Unfree software; requires config.allowUnfree = true
-        vscode
+        # 2026-07-21: fails at patchPhase
+        # vscode
         # (vscode-with-extensions.override {
         #   vscodeExtensions = with vscode-extensions; [
         #     matklad.rust-analyzer
