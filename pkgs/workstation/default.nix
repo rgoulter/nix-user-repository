@@ -153,7 +153,7 @@ in
         kicad
         openscad
         photoqt
-        pinentry-gtk2
+        pinentry-gnome3
         # qmk: works on macOS, too,
         # but my macOS is not very powerful
         qmk
