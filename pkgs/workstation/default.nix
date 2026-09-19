@@ -140,7 +140,6 @@ in
             tridactyl-native
           ];
         })
-        freecad
         # Unfree software; requires config.allowUnfree = true
         google-chrome
         (gimp-with-plugins.override {
