@@ -97,10 +97,10 @@ in
       ]
       ++ (lib.optionals true [
         ])
-      ++ (lib.optionals stdenv.isDarwin [
+      ++ (lib.optionals stdenv.hostPlatform.isDarwin [
         pinentry_mac
       ])
-      ++ (lib.optionals stdenv.isLinux [
+      ++ (lib.optionals stdenv.hostPlatform.isLinux [
         onedrive
         # bare `pinentry` was removed from nixpkgs; -curses fits this CLI-oriented package
         pinentry-curses
@@ -118,7 +118,7 @@ in
         "/share"
       ]
       ++ (with pkgs;
-        lib.optionals stdenv.isDarwin [
+        lib.optionals stdenv.hostPlatform.isDarwin [
           "/Applications"
           "/Library"
         ]);

@@ -110,7 +110,7 @@ in
       ]
       ++ (lib.optionals true [
         ])
-      ++ (lib.optionals stdenv.isDarwin [
+      ++ (lib.optionals stdenv.hostPlatform.isDarwin [
         blueutil
         colima
         # 2022-02-06: macOS testykchallengeresponsekey is failing
@@ -135,7 +135,7 @@ in
         #   ];
         # })
       ])
-      ++ (lib.optionals stdenv.isLinux [
+      ++ (lib.optionals stdenv.hostPlatform.isLinux [
         desktop-file-utils
         (firefox.override {
           nativeMessagingHosts = [
@@ -181,7 +181,7 @@ in
         "/share"
       ]
       ++ (with pkgs;
-        lib.optionals stdenv.isDarwin [
+        lib.optionals stdenv.hostPlatform.isDarwin [
           "/Applications"
           "/Library"
         ]);
