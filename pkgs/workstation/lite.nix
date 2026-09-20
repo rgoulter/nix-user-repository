@@ -102,7 +102,8 @@ in
       ])
       ++ (lib.optionals stdenv.isLinux [
         onedrive
-        pinentry
+        # bare `pinentry` was removed from nixpkgs; -curses fits this CLI-oriented package
+        pinentry-curses
         # xclip for X11/XWayland, wl-clipboard for native Wayland
         wl-clipboard
         xclip
