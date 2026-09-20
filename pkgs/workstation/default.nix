@@ -167,6 +167,8 @@ in
         vlc
         # Unfree software; requires config.allowUnfree = true
         vscode
+        # xclip for X11/XWayland, wl-clipboard for native Wayland
+        wl-clipboard
         xclip
         yubikey-touch-detector
       ]);

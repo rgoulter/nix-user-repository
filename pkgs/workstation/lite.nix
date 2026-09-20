@@ -103,6 +103,8 @@ in
       ++ (lib.optionals stdenv.isLinux [
         onedrive
         pinentry
+        # xclip for X11/XWayland, wl-clipboard for native Wayland
+        wl-clipboard
         xclip
         yubikey-touch-detector
       ]);
