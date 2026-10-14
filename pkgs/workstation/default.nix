@@ -22,7 +22,6 @@
   '';
   aspellWithMyDicts = pkgs.aspellWithDicts (d: [
     d.en
-    d.en-computers
     d.vi
   ]);
 in
