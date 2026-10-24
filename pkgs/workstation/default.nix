@@ -3,7 +3,10 @@
   makeEmacsChemacsProfile,
 }: let
   # emacs-pgtk for native Wayland on Linux; plain emacs is the Cocoa build on macOS
-  emacsBase = if pkgs.stdenv.hostPlatform.isLinux then pkgs.emacs-pgtk else pkgs.emacs;
+  emacsBase =
+    if pkgs.stdenv.hostPlatform.isLinux
+    then pkgs.emacs-pgtk
+    else pkgs.emacs;
   emacsWithPackages = (pkgs.emacsPackagesFor emacsBase).emacsWithPackages (epkgs: [
     epkgs.ghostel
     epkgs.treesit-grammars.with-all-grammars
