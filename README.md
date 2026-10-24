@@ -20,6 +20,7 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
   - `devops-env-c` packages I like using for devops.
   - `mmdflux` — headless Mermaid → terminal text, SVG, MMDS JSON ([kevinswiber/mmdflux](https://github.com/kevinswiber/mmdflux)).
   - `merman-cli` — headless Mermaid.js renderer for SVG, raster, and terminal output ([Latias94/merman](https://github.com/Latias94/merman)).
+- `llm-agents` — buildEnv of LLM coding-agent CLIs from [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix): `grok` (Grok Build), `codex` (OpenAI Codex TUI), `chatgpt` (ChatGPT/Codex desktop), `copilot-cli`, `claude-code`. Uses the numtide binary cache (`cache.numtide.com`).
 
 ## Using NixOS Modules in a NixOS Configuration
 

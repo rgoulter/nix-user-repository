@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ./llm-agents/flake-part.nix
     ./mmdflux/flake-part.nix
     ./merman-cli/flake-part.nix
   ];
