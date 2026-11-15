@@ -14,6 +14,7 @@
     pkgs.writeScriptBin
     "gpg-quick-generate-master-key"
     (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
+  gpg-extend-expiry = pkgs.callPackage ../../pkgs/gpg-extend-expiry {};
 in {
   # NVIDIA applies to the ISO only; VMs keep the default graphics.
   image.modules.iso = {
@@ -32,6 +33,7 @@ in {
     fish
     gawk
     gnupg
+    gpg-extend-expiry
     gpg-quick-generate-master-key
     keepassxc
     kitty
