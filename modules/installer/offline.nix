@@ -15,6 +15,10 @@
     "gpg-quick-generate-master-key"
     (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
   gpg-extend-expiry = pkgs.callPackage ../../pkgs/gpg-extend-expiry {};
+  offline-gpg = pkgs.writeShellScriptBin "offline-gpg" ''
+    exec ${pkgs.just}/bin/just --justfile /etc/offline-gpg/justfile \
+      --working-directory "$PWD" "$@"
+  '';
 in {
   # NVIDIA applies to the ISO only; VMs keep the default graphics.
   image.modules.iso = {
@@ -27,6 +31,8 @@ in {
     };
   };
 
+  environment.etc."offline-gpg/justfile".source = ../../scripts/offline-gpg.justfile;
+
   environment.gnome.excludePackages = [pkgs.gnome-tour];
   environment.systemPackages = with pkgs; [
     bash
@@ -35,10 +41,12 @@ in {
     gnupg
     gpg-extend-expiry
     gpg-quick-generate-master-key
+    just
     keepassxc
     kitty
     monkeysphere
     neovim
+    offline-gpg
     openssl
     paperkey
     qrencode
