@@ -65,6 +65,7 @@ in
         fish
         fzf
         gawk
+        gh
         git
         git-absorb
         glances
