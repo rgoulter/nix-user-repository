@@ -15,7 +15,9 @@
   config = {
     packages = [
       config.programs.treefmt.package
+      pkgs.actionlint
       pkgs.jujutsu
+      pkgs.shellcheck
     ];
 
     languages = {
