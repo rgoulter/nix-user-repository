@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options = {
@@ -14,6 +15,7 @@
   config = {
     packages = [
       config.programs.treefmt.package
+      pkgs.jujutsu
     ];
 
     languages = {
