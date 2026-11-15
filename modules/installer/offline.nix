@@ -10,6 +10,13 @@ in {
   # bug: 2023-09-22: man-cache generation fails if programs.fish.enable = true;
   documentation.man.generateCaches = false;
 
+  image.modules.iso = {
+    isoImage = {
+      makeEfiBootable = true;
+      makeUsbBootable = true;
+    };
+  };
+
   environment.gnome.excludePackages = [pkgs.gnome-tour];
   environment.systemPackages = with pkgs; [
     bash
