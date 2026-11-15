@@ -23,3 +23,7 @@ alias f := fmt
 
 fmt:
     nix fmt
+
+# Lint GitHub Actions workflows
+lint-workflows:
+    actionlint
