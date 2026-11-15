@@ -14,7 +14,11 @@ in {
   # bug: 2023-09-22: man-cache generation fails if programs.fish.enable = true;
   documentation.man.generateCaches = false;
 
+  # NVIDIA applies to the ISO only; VMs keep the default graphics.
   image.modules.iso = {
+    hardware.nvidia.open = false;
+    services.xserver.videoDrivers = ["nvidia" "modesetting" "fbdev"];
+
     isoImage = {
       makeEfiBootable = true;
       makeUsbBootable = true;
@@ -39,8 +43,6 @@ in {
     yubikey-manager
     yubioath-flutter
   ];
-
-  hardware.nvidia.open = false;
 
   # The machine is meant to stay air-gapped, so all networking is disabled.
   boot.blacklistedKernelModules = ["bluetooth" "btusb" "cfg80211" "mac80211"];
@@ -93,8 +95,6 @@ in {
       enable = true;
 
       excludePackages = [pkgs.xterm];
-
-      videoDrivers = ["nvidia"];
 
       xkb.layout = "us";
     };
