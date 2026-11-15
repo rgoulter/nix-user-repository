@@ -26,10 +26,6 @@
     # Intentionally does NOT follow nixpkgs so binary cache.numtide.com hits.
     llm-agents.url = "github:numtide/llm-agents.nix";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
