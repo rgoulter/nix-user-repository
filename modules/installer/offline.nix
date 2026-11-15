@@ -1,7 +1,11 @@
 # offline.nix - NixOS configuration for an "offline"
 #  NixOS ISO, for e.g. generating a KeePassXC diceware
 #  passphrase, or manipulating PGP / GnuPG keys.
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   gpg-quick-generate-master-key =
     pkgs.writeScriptBin
     "gpg-quick-generate-master-key"
@@ -20,7 +24,6 @@ in {
   environment.gnome.excludePackages = [pkgs.gnome-tour];
   environment.systemPackages = with pkgs; [
     bash
-    firefox
     fish
     gawk
     gnupg
@@ -29,7 +32,6 @@ in {
     kitty
     monkeysphere
     neovim
-    openssh
     openssl
     paperkey
     qrencode
@@ -39,6 +41,15 @@ in {
   ];
 
   hardware.nvidia.open = false;
+
+  # The machine is meant to stay air-gapped, so all networking is disabled.
+  boot.blacklistedKernelModules = ["bluetooth" "btusb" "cfg80211" "mac80211"];
+  hardware.bluetooth.enable = lib.mkForce false;
+  networking = {
+    networkmanager.enable = lib.mkForce false;
+    useDHCP = false;
+    wireless.enable = false;
+  };
 
   programs = {
     fish.enable = true;
@@ -102,7 +113,6 @@ in {
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = [
-      "networkmanager"
       "wheel"
     ];
     password = "nixos";
