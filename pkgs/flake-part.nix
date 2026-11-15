@@ -28,6 +28,7 @@
     packages = {
       default = workstation;
       inherit workstation workstation-lite;
+      gpg-extend-expiry = pkgs.callPackage ./gpg-extend-expiry {};
       myPackages = pkgs.lib.warn "myPackages is deprecated; use workstation instead." workstation;
       myPackages-lite =
         pkgs.lib.warn "myPackages-lite is deprecated; use workstation-lite instead."
