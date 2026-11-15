@@ -1,6 +1,10 @@
-# offline.nix - NixOS configuration for an "offline"
-#  NixOS ISO, for e.g. generating a KeePassXC diceware
-#  passphrase, or manipulating PGP / GnuPG keys.
+# offline.nix - NixOS configuration for an air-gapped
+#  NixOS ISO, booted from a USB drive to manage GnuPG keys:
+#  generating keys, extending expiry, paperkey backups,
+#  and provisioning a YubiKey.
+#  It also includes KeePassXC, e.g. for generating a
+#  diceware passphrase.
+#  Networking is disabled; printing is kept for paperkey backups.
 {
   lib,
   pkgs,
