@@ -51,6 +51,7 @@ in
         csvkit
         ctags
         delta
+        devenv
         difftastic
         direnv
         docker

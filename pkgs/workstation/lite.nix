@@ -51,6 +51,7 @@ in
         coreutils
         ctags
         delta
+        devenv
         difftastic
         direnv
         docker
