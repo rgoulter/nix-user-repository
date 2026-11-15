@@ -71,6 +71,7 @@ in
         helix
         htop
         jq
+        jujutsu
         just
         kitty
         kubectl
