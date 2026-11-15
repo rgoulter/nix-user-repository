@@ -11,9 +11,6 @@
     "gpg-quick-generate-master-key"
     (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
 in {
-  # bug: 2023-09-22: man-cache generation fails if programs.fish.enable = true;
-  documentation.man.generateCaches = false;
-
   # NVIDIA applies to the ISO only; VMs keep the default graphics.
   image.modules.iso = {
     hardware.nvidia.open = false;
@@ -71,9 +68,6 @@ in {
       user = "nixos";
     };
     gnome.core-apps.enable = false;
-
-    # 2022-06-19: the check fails, for some reason
-    logrotate.checkConfig = false;
 
     pcscd.enable = true;
 
