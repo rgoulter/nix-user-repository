@@ -15,6 +15,7 @@
     "gpg-quick-generate-master-key"
     (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
   gpg-extend-expiry = pkgs.callPackage ../../pkgs/gpg-extend-expiry {};
+  offline-gpg-docs = pkgs.callPackage ../../pkgs/offline-gpg-docs {};
   offline-gpg = pkgs.writeShellScriptBin "offline-gpg" ''
     exec ${pkgs.just}/bin/just --justfile /etc/offline-gpg/justfile \
       --working-directory "$PWD" "$@"
@@ -47,6 +48,7 @@ in {
     monkeysphere
     neovim
     offline-gpg
+    offline-gpg-docs
     openssl
     paperkey
     qrencode
@@ -54,6 +56,8 @@ in {
     yubikey-manager
     yubioath-flutter
   ];
+
+  users.motd = "GnuPG help: man offline-gpg; recipes: offline-gpg --list";
 
   # The machine is meant to stay air-gapped, so all networking is disabled.
   boot.blacklistedKernelModules = ["bluetooth" "btusb" "cfg80211" "mac80211"];
