@@ -3,6 +3,23 @@
   self,
   ...
 }: {
+  perSystem = {
+    lib,
+    system,
+    ...
+  }: {
+    checks = lib.optionalAttrs (system == "x86_64-linux") {
+      offline-gpg = import ../tests/offline-gpg.nix {
+        inherit lib;
+        pkgs = import ../lib/unfree-pkgs.nix {
+          nixpkgs = inputs.nixpkgs;
+          inherit system;
+        };
+        offlineModule = self.nixosModules.offline;
+      };
+    };
+  };
+
   flake = {
     nixosModules = import ../modules;
 
