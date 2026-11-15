@@ -96,6 +96,10 @@ The `offline` configuration is an air-gapped system for managing GnuPG keys.
 It is booted from a USB drive, away from the main installation.
 Networking is disabled, and printing is kept for paperkey backups.
 
+The image includes `gpg-extend-expiry`, which extends the expiry of a key and its subkeys and exports the public key.
+The `offline-gpg` command runs a justfile of common GnuPG tasks; `offline-gpg --list` lists them.
+Run `man offline-gpg` on the image for the full procedure.
+
 Build the ISO with
 
 ``` sh
