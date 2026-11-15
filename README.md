@@ -7,7 +7,7 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
 ## Outputs
 
 - NixOS Configurations
-  - `offline-iso` - ISO/Installer, NixOS configuration with KeePass XC, GnuPG, etc.
+  - `offline` - air-gapped NixOS configuration with GnuPG, paperkey, KeePassXC, etc.
 
 - DevShells (Provide compiler/tool, LSP, linting, debugging, etc.; goes well with direnv):
   - go (`go`, `go_1_16`, `go_1_17`, `go_1_18`)
@@ -16,6 +16,7 @@ Repository based on the [nix-community/nur-packages-template](https://github.com
   - terraform (`terraform`)
 
 - Packages
+  - `offline-iso` - bootable ISO of the `offline` NixOS configuration, for managing GnuPG keys.
   - `workstation` env with packages I like on my desktop (`myPackages` is a deprecated alias).
   - `devops-env-c` packages I like using for devops.
   - `mmdflux` — headless Mermaid → terminal text, SVG, MMDS JSON ([kevinswiber/mmdflux](https://github.com/kevinswiber/mmdflux)).
@@ -89,26 +90,35 @@ If using [specialisations](https://nixos.wiki/wiki/Specialisation) (e.g. the
 /nix/var/nix/profiles/system/specialisation/gnome/bin/switch-to-configuration switch
 ```
 
-## Running the 'Offline' NixOS Configuration in a VM
+## The 'Offline' NixOS Configuration
 
-The intended use is to build the iso using
+The `offline` configuration is an air-gapped system for managing GnuPG keys.
+It is booted from a USB drive, away from the main installation.
+Networking is disabled, and printing is kept for paperkey backups.
+
+Build the ISO with
 
 ``` sh
 nix build .#offline-iso
 ```
 
-and then copying this ISO to thumbdrive. (e.g. to [Ventoy](https://www.ventoy.net/en/index.html)).
+The ISO is written to `result/iso/`.
+It can be copied to a thumbdrive (e.g. with [Ventoy](https://www.ventoy.net/en/index.html)).
 
-For faster iteration, it's also possible to use [nixos-shell](https://github.com/Mic92/nixos-shell/)
-
-``` sh
-nix run nixpkgs#nixos-shell -- --flake .#offline
-```
-
-or just directly run a qemu VM:
+To try the ISO in QEMU without root:
 
 ``` sh
-nix run .#offline-vm
+nix run nixpkgs#qemu -- -m 4G -smp 2 -nic none -vga virtio -cdrom result/iso/*.iso -boot d
 ```
 
-(take care to remove the `.qcow2` file when changing the `offline.nix` nixos module, though).
+Add `-enable-kvm` where `/dev/kvm` is available.
+
+For faster iteration, build and run the configuration as a VM:
+
+``` sh
+nix build .#nixosConfigurations.offline.config.system.build.vm
+./result/bin/run-*-vm
+```
+
+The VM keeps its state in a `nixos.qcow2` file in the current directory.
+Delete this file after changing the `offline.nix` module, so that the VM starts from a fresh disk.
