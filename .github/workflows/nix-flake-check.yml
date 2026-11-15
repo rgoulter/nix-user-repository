@@ -35,5 +35,8 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@v14
 
       - name: Run Nix flake check
-        # devenv needs devenv-root as an absolute path
-        run: nix flake check --override-input devenv-root "file+file://${{ github.workspace }}"
+        # file+file:// reads a file whose contents are the project path.
+        run: |
+          mkdir -p .devenv
+          printf %s "$PWD" > .devenv/root
+          nix flake check --override-input devenv-root "file+file://$PWD/.devenv/root"
