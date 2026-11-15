@@ -1,0 +1,173 @@
+.TH OFFLINE-GPG 7 "" "offline NixOS image" "Miscellaneous Information Manual"
+.SH NAME
+offline-gpg \- managing GnuPG keys on the air-gapped offline image
+.SH DESCRIPTION
+This image is booted from a USB drive on a machine that stays disconnected from every network.
+Its purpose is to hold the secret key of an OpenPGP identity, so that the key never touches the networked machine.
+The image provides GnuPG, paperkey, KeePassXC, the YubiKey tools and a printer driver for paper backups.
+.PP
+Networking is disabled.
+Wi-Fi and Bluetooth kernel modules are blacklisted, and NetworkManager is not running.
+Files enter and leave the machine only on removable media.
+.SH IMPORTING THE SECRET KEY
+Plug in the drive that holds the exported secret key and find its device with
+.BR lsblk (8).
+Mount it with
+.BR "udisksctl mount \-b /dev/sdX1" .
+Mounted drives appear under
+.IR /run/media/nixos/ .
+Import the key with
+.PP
+.RS
+.nf
+gpg \-\-import /run/media/nixos/DRIVE/secret-key.asc
+.fi
+.RE
+.PP
+or with
+.PP
+.RS
+.nf
+offline\-gpg import /run/media/nixos/DRIVE/secret-key.asc
+.fi
+.RE
+.PP
+GnuPG asks for the passphrase of the key through its pinentry dialogue.
+The imported keys are kept in a temporary home directory that is lost on shutdown.
+.SH CHECKING EXPIRY DATES
+List the secret keys with
+.PP
+.RS
+.nf
+gpg \-\-list\-secret\-keys \-\-keyid\-format long
+.fi
+.RE
+.PP
+Each primary key and subkey line ends in the expiry date, in the form
+.BR "[SC] [expires: 2027-01-31]" .
+The recipe
+.B list-keys
+runs the same command.
+.SH EXTENDING THE EXPIRY
+The command
+.PP
+.RS
+.nf
+gpg\-extend\-expiry [\-o FILE] FINGERPRINT [EXPIRY]
+.fi
+.RE
+.PP
+sets the expiry of the primary key and of all subkeys of the secret key FINGERPRINT.
+EXPIRY is any form that gpg accepts, such as
+.BR 1y ,
+.B 90d
+or
+.BR 2030\-01\-01 .
+It defaults to one year, counted from the current date.
+The command then prints the new expiry dates and writes the armoured public key to
+.IR FINGERPRINT .pub.asc
+in the current directory, or to FILE when
+.B \-o
+is given.
+The command fails if FINGERPRINT is not a secret key in the keyring.
+.PP
+The environment variable
+.B GPG_OPTS
+holds extra options for every gpg invocation.
+It is split on whitespace, and a lone
+.B ''
+stands for an empty argument.
+.PP
+The command is equivalent to the following raw gpg invocations.
+The first changes the primary key and the second changes all subkeys.
+.PP
+.RS
+.nf
+gpg \-\-quick\-set\-expire FINGERPRINT 1y
+gpg \-\-quick\-set\-expire FINGERPRINT 1y '*'
+.fi
+.RE
+.PP
+The system clock of an offline machine is often wrong.
+Check the date with
+.BR date (1)
+before extending the expiry, because the new expiry is computed from it.
+.SH MOVING THE PUBLIC KEY BACK
+Copy the file
+.IR FINGERPRINT .pub.asc
+to removable media, shut the image down, and import it on the networked machine with
+.PP
+.RS
+.nf
+gpg \-\-import FINGERPRINT.pub.asc
+.fi
+.RE
+.PP
+The updated key can then be published, for example with
+.BR "gpg \-\-send\-keys FINGERPRINT" ,
+or uploaded to any other service that holds the key.
+.PP
+If the subkeys live on a YubiKey or another OpenPGP card, the card holds only the secret subkeys.
+Extending the expiry changes the self-signatures on the public key and nothing on the card.
+No transfer to the card is needed.
+The networked machine needs the updated public key so that it accepts signatures made with the subkeys.
+.SH PAPERKEY BACKUP AND PRINTING
+The program
+.BR paperkey (1)
+extracts the secret parts of a key into a short text that can be stored on paper.
+Create the text file with
+.PP
+.RS
+.nf
+gpg \-\-export\-secret\-keys FINGERPRINT | paperkey \-\-output FINGERPRINT.paperkey.txt
+.fi
+.RE
+.PP
+Print it with
+.PP
+.RS
+.nf
+lp FINGERPRINT.paperkey.txt
+.fi
+.RE
+.PP
+Restoring from paper requires the public key as well as the paperkey text.
+.SH OFFLINE-GPG RECIPES
+The command
+.B offline\-gpg
+runs recipes from the justfile
+.IR /etc/offline\-gpg/justfile .
+Files are read from and written to the current directory.
+.B offline\-gpg \-\-list
+lists the recipes.
+.TP
+.B list\-keys
+List the secret keys with fingerprints and expiry dates.
+.TP
+.BI import " PATH"
+Import a secret key from PATH.
+.TP
+.BI generate " [NAME_AND_EMAIL]"
+Generate a new master key and subkeys with
+.BR gpg\-quick\-generate\-master\-key .
+.TP
+.BI extend\-expiry " FPR [EXPIRY]"
+Run
+.BR gpg\-extend\-expiry .
+EXPIRY defaults to 1y.
+.TP
+.BI export\-public " FPR"
+Write the armoured public key to
+.IR FPR .pub.asc.
+.TP
+.BI backup\-paperkey " FPR [PRINT]"
+Write a paperkey text backup to
+.IR FPR .paperkey.txt.
+Any value for PRINT also prints the file with
+.BR lp (1).
+.TP
+.B card\-status
+Show the status of the connected OpenPGP card.
+.SH SEE ALSO
+.BR gpg (1),
+.BR paperkey (1)
