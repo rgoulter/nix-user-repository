@@ -31,5 +31,6 @@ pkgs.buildEnv {
   pathsToLink = [
     "/bin"
     "/share"
+    "/Applications"
   ];
 }
