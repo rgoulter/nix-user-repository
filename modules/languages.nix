@@ -17,7 +17,6 @@ in {
     nodejs.enable = lib.mkEnableOption "packages for nodejs development";
     python.enable = lib.mkEnableOption "packages for python development";
     rust_thumbv7em-none-eabihf.enable = lib.mkEnableOption "packages for rust development (ARM)";
-    rust_wasm32-unknown-unknown.enable = lib.mkEnableOption "packages for rust development (WASM)";
     terraform.enable = lib.mkEnableOption "packages for terraform development";
   };
   config = {
@@ -30,18 +29,12 @@ in {
         ++ (lib.optionals cfg.nodejs.enable languages.nodejs.packages)
         ++ (lib.optionals cfg.python.enable languages.python.packages)
         ++ (lib.optionals cfg.rust_thumbv7em-none-eabihf.enable languages.rust_thumbv7em-none-eabihf.packages)
-        ++ (lib.optionals cfg.rust_wasm32-unknown-unknown.enable languages.rust_wasm32-unknown-unknown.packages)
         ++ (lib.optionals cfg.terraform.enable languages.terraform.packages);
       # python rust
       variables =
         (
           if cfg.rust_thumbv7em-none-eabihf.enable
           then languages.rust_thumbv7em-none-eabihf.environment
-          else {}
-        )
-        // (
-          if cfg.rust_wasm32-unknown-unknown.enable
-          then languages.rust_wasm32-unknown-unknown.environment
           else {}
         );
     };
