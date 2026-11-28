@@ -13,9 +13,9 @@
   gpg-quick-generate-master-key =
     pkgs.writeScriptBin
     "gpg-quick-generate-master-key"
-    (pkgs.lib.readFile ../../scripts/gpg-quick-generate-master-key.sh);
-  gpg-extend-expiry = pkgs.callPackage ../../pkgs/gpg-extend-expiry {};
-  offline-gpg-docs = pkgs.callPackage ../../pkgs/offline-gpg-docs {};
+    (pkgs.lib.readFile ../scripts/gpg-quick-generate-master-key.sh);
+  gpg-extend-expiry = pkgs.callPackage ../pkgs/gpg-extend-expiry {};
+  offline-gpg-docs = pkgs.callPackage ../pkgs/offline-gpg-docs {};
   offline-gpg = pkgs.writeShellScriptBin "offline-gpg" ''
     exec ${pkgs.just}/bin/just --justfile /etc/offline-gpg/justfile \
       --working-directory "$PWD" "$@"
@@ -32,7 +32,7 @@ in {
     };
   };
 
-  environment.etc."offline-gpg/justfile".source = ../../scripts/offline-gpg.justfile;
+  environment.etc."offline-gpg/justfile".source = ../scripts/offline-gpg.justfile;
 
   environment.gnome.excludePackages = [pkgs.gnome-tour];
   environment.systemPackages = with pkgs; [
