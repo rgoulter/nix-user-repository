@@ -15,7 +15,7 @@
       inherit system;
     };
     makeEmacsChemacsProfile =
-      pkgs.callPackage ../lib/make-emacs-chemacs-profile-application.nix {};
+      pkgs.callPackage ../lib/emacs-chemacs.nix {};
     workstation = import ./workstation {
       inherit makeEmacsChemacsProfile;
       pkgs = pkgsUnfree;
